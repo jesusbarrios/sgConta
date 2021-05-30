@@ -1,9 +1,14 @@
 <div class="navbar-fixed">
     <nav class="hoverable  teal lighten-2">
         <div class="container nav-wrapper ">
-           <a href="" class="brand-logo right">[contabilidad]</a>
+           <a href="" class="brand-logo right hide-on-med-and-down">[contabilidad]</a>
+           <a href="" class="brand-logo right sidenav-trigger">[conta]</a>
 
-            <ul id="nav-mobile">
+            <a href="#" data-target="menu-responsive" class="sidenav-trigger">
+                <i class="material-icons">menu</i>
+            </a>
+
+            <ul id="nav-mobile" class="left hide-on-med-and-down">
                 <li><a href="/">Inicio</a></li>
                 <li><a href="/ejercicios">Ejecrcicios</a></li>
                 <li><a href="/cuentas">Cuentas</a></li>
@@ -25,11 +30,24 @@
     </nav>
 </div>
 
+<ul class="sidenav" id="menu-responsive">
+    <li><a href="/">Inicio</a></li>
+    <li><a href="/ejercicios">  Ejecrcicios</a></li>
+    <li><a href="/cuentas">     Cuentas</a></li>
+    <li><a href="asientos">     Asientos</a></li>
+    <li class="divider"></li>
+    <li><a href="ldiario">      Libro diario</a></li>
+    <li><a href="lmayor">       Libro mayor</a></li>
+    <li class="divider"></li>
+    <li><a href="informatios">  Datos personales</a></li>
+    <li><a href="password">     Contraseña</a></li>
+    <li><a href="logout">       Salir</a></li>
+</ul>
 
 <ul id="book_drop" class="dropdown-content">
-    <li><a href="ldiario">Diario</a></li>
+    <li><a href="ldiario">  Diario</a></li>
     <li class="divider"></li>
-    <li><a href="lmayor">Mayor</a></li>
+    <li><a href="lmayor">   Mayor</a></li>
     <li class="divider"></li>
 </ul>
 
