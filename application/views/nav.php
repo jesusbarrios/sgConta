@@ -32,20 +32,22 @@
 
 <ul class="sidenav" id="menu-responsive">
     <li><a href="/">Inicio</a></li>
-    <li><a href="/ejercicios">Ejecrcicios</a></li>
-    <li><a href="/cuentas">Cuentas</a></li>
-    <li><a href="asientos">Asientos</a></li>
-    <li><a href="ldiario">Libro diario</a></li>
-    <li><a href="lmayor">Libro mayor</a></li>
-    <li><a href="informatios">Datos personales</a></li>
-    <li><a href="password">Contraseña</a></li>
-    <li><a href="logout">Salir</a></li>
+    <li><a href="/ejercicios">  Ejecrcicios</a></li>
+    <li><a href="/cuentas">     Cuentas</a></li>
+    <li><a href="asientos">     Asientos</a></li>
+    <li class="divider"></li>
+    <li><a href="ldiario">      Libro diario</a></li>
+    <li><a href="lmayor">       Libro mayor</a></li>
+    <li class="divider"></li>
+    <li><a href="informatios">  Datos personales</a></li>
+    <li><a href="password">     Contraseña</a></li>
+    <li><a href="logout">       Salir</a></li>
 </ul>
 
 <ul id="book_drop" class="dropdown-content">
-    <li><a href="ldiario">Diario</a></li>
+    <li><a href="ldiario">  Diario</a></li>
     <li class="divider"></li>
-    <li><a href="lmayor">Mayor</a></li>
+    <li><a href="lmayor">   Mayor</a></li>
     <li class="divider"></li>
 </ul>
 
