@@ -14,7 +14,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 <body>
+    <!-- Menu -->
     <?php $this->load->view('nav'); ?>
+
+    <!-- Contenido -->
     <div class="container section">
         <div class="row">
             <!-- Datos del usuario -->
@@ -76,6 +79,7 @@
             </div>
         </div>
     </div>
+
     <!-- Footer -->
     <?php $this->load->view('footer'); ?>
 
