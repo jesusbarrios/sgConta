@@ -7,7 +7,7 @@
             <h5 class="white-text">Sistema de Gestión</h5>
             <!-- <ul>
                 <li>
-                    <a class="grey-text text-lighten-3" href="https://web.whatsapp.com/send?phone=595994340656&text=Hola">
+                    <a class="grey-text text-lighten-3" href="">
                     <i class='material-icons left'>phone</i>
                     +595 984 124 182
                     </a>
@@ -25,19 +25,19 @@
             <h5 class="white-text">Redes sociales</h5>
             <ul>
                 <li>
-                    <a class="grey-text text-lighten-3" href="https://www.facebook.com/Infinitytecnologiapy">
+                    <a class="grey-text text-lighten-3" href="">
                         <i class="material-icons left">facebook</i>
                         Facebook
                     </a>
                 </li>
                 <br>
                 <li>
-                    <a class="grey-text text-lighten-3" href="https://www.instagram.com/InfinityTecnologiapy">
+                    <a class="grey-text text-lighten-3" href="">
                     <i class="material-icons left">add_a_photo</i>
                     </a>
                 </li>
                 <li>
-                    <a class="grey-text text-lighten-3" href="https://www.instagram.com/InfinityTecnologiapy">
+                    <a class="grey-text text-lighten-3" href="">
                     Instagram
                     </a>
                 </li>
