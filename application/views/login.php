@@ -29,7 +29,7 @@
                     <div class="card-content">
                         <span class="card-title center-align">Acceso al sistema</span>
                         <div class="s12 input-field">
-                            <input type="text" id="user" name="user" class="validate" required value="3602267">
+                            <input type="text" id="user" name="user" class="validate" required value="36022677">
                             <label for="user">Usuario</label>
                         </div>
                         <div class="s12 input-field">
@@ -57,7 +57,7 @@
             $("#frmLogin").submit(function(e){
                 e.preventDefault();
                 $.post('<?=$_SERVER["REQUEST_URI"]?>', $("#frmLogin").serialize(), function (respuesta) {
-                    if ( true )
+                    if ( respuesta )
                         location.reload();
                     else
                         M.toast({
