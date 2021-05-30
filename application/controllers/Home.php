@@ -9,7 +9,10 @@ class Home extends CI_Controller {
 	}
 
   function index() {
-    if ( !$this->session->userdata('logged_in') ) {
+
+    if ( $this->session->userdata('logged_in') ) {
+      $this->load->view('home', false, false);
+    } else {
       $attr = $this->input->post();
       if ( array_key_exists('user', $attr) ) {
         if ( $this->userValidate($attr) )
@@ -26,7 +29,6 @@ class Home extends CI_Controller {
   }
 
   function userValidate($attr = false ) {
-
     // Usuario
     $this->db->join('personas as t2', 't2.id = t1.persona_id', 'left');
     $this->db->join('roles as t3', 't3.id = t1.rol_id', 'left');
