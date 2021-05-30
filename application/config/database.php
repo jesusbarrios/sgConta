@@ -76,7 +76,6 @@ $query_builder = TRUE;
 $db['default'] = array(
 	'dsn'			=> '',
 	'hostname'		=> 'localhost',
-	// 'username'		=> 'ingsoftc_nabuco',
 	'username'		=> 'root',
 	'database'		=> 'sgconta',
 	'dbdriver'		=> 'mysqli',
@@ -93,8 +92,7 @@ $db['default'] = array(
 	'stricton'		=> FALSE,
 	'failover'		=> array(),
 	'save_queries'	=> TRUE,
-	// 'password'		=> 'n2B2u.8C2o3',
-	'password'		=> ''
+	'password'		=> '',
 );
 
 

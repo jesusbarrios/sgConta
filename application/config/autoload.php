@@ -60,8 +60,6 @@ $autoload['packages'] = array();
 */
 $autoload['libraries'] = array('database', 'email', 'session', 'javascript', 'table', 'form_validation');
 
-// $autoload['libraries'] = array();
-
 /*
 | -------------------------------------------------------------------
 |  Auto-load Drivers

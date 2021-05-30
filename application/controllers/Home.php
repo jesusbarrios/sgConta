@@ -9,6 +9,7 @@ class Home extends CI_Controller {
 	}
 
   function index() {
+
     if ( $this->session->userdata('logged_in') ) {
       $this->load->view('home', false, false);
     } else {
@@ -20,7 +21,10 @@ class Home extends CI_Controller {
           echo false;
         return;
       }
+
       $this->load->view('login', false, false);
+    } else {
+      $this->load->view('home', false, false);
     }
   }
 

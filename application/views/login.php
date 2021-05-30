@@ -64,7 +64,7 @@
                             html: 'Datos de usuario incorrectos',
                             displayLength: 2500,
                             inDuration: 1000,
-                            outDuration: 1000,
+                            outDuration:1000,
                             classes: "red"
                         });
                 });
