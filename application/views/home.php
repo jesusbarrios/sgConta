@@ -46,6 +46,34 @@
                     </div>
                 </div>
             </div>
+            <!-- Datos de la empresa -->
+            <div class="col s12 m6">
+                <div class="card hoverable">
+                    <div class="card-content">
+                        <span class="card-title center-align">Datos de la empresa</span>
+                        <table class="striped">
+                            <tbody>
+                                <tr>
+                                    <td>Razon social</td>
+                                    <td><?=$this->sesion['empresa']?></td>
+                                </tr>
+                                <tr>
+                                    <td>RUC</td>
+                                    <td><?=$this->sesion['ruc']?></td>
+                                </tr>
+                                <tr>
+                                    <td>Fecha de constitución</td>
+                                    <td><?=$this->sesion['constitucion']?></td>
+                                </tr>
+                                <tr>
+                                    <td>Inicio de actividad</td>
+                                    <td><?=$this->sesion['inicioActividad']?></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <!-- Footer -->
