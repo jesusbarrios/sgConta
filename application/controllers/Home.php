@@ -21,10 +21,7 @@ class Home extends CI_Controller {
           echo false;
         return;
       }
-
       $this->load->view('login', false, false);
-    } else {
-      $this->load->view('home', false, false);
     }
   }
 
