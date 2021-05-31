@@ -12,7 +12,7 @@
                 <li><a href="/">Inicio</a></li>
                 <li><a href="/exercises">Ejecrcicios</a></li>
                 <li><a href="/accounts">Cuentas</a></li>
-                <li><a href="asientos">Asientos</a></li>
+                <li><a href="entries">Asientos</a></li>
                 <li>
                     <a href="#" class="dropdown-trigger" data-target="book_drop">
                         Libros
@@ -34,7 +34,7 @@
     <li><a href="/">Inicio</a></li>
     <li><a href="/exercises">  Ejecrcicios</a></li>
     <li><a href="/accounts">     Cuentas</a></li>
-    <li><a href="asientos">     Asientos</a></li>
+    <li><a href="entries">     Asientos</a></li>
     <li class="divider"></li>
     <li><a href="ldiario">      Libro diario</a></li>
     <li><a href="lmayor">       Libro mayor</a></li>

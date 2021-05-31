@@ -48,7 +48,7 @@
     <div class="footer-copyright">
         <div class="container">
             © 2021 FIUNI UNI
-            <a class="grey-text text-lighten-4 right" href="http://linkedin.com/in/jesuswilson/">Develop by Wilson Barrios</a>
+            <a class="grey-text text-lighten-4 right" href="http://linkedin.com/in/jesuswilson/">Developed by Wilson Barrios</a>
         </div>
     </div>
 </footer>
