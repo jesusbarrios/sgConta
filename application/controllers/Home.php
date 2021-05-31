@@ -39,7 +39,7 @@ class Home extends CI_Controller {
       'select'  => array(
         't1.id as user_id',
         't1.rol_id',
-        'DATE_FORMAT(t1.loged_at,	" %d/%c/%Y %T") as loged_at',
+        'DATE_FORMAT(t1.loged_at,	"%W %d/%c/%Y %T") as loged_at',
         'concat(t2.nombres, " ", t2.apellidos ) as usuario',
         't3.denominacion as rol',
         "FORMAT(t2.documento, 0, 'de_DE') as documento",
