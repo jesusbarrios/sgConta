@@ -19,95 +19,106 @@
     <div class="container section">
         <div class="row">
             <!-- <div class="col s12 m6"> -->
-            <form class="card hoverable col s12 m6" actions="" id="frm" name="frm">
-                <div class="card-content">
-                    <span class="card-title center-align">Asiento Contable</span>
+            <form class="card hoverable col s12 m12" actions="" id="frm" name="frm">
+                <div class="row">
+                    <div class="col m4">
+                        <div class="card-content">
+                            <span class="card-title center-align">Asiento Contable</span>
 
-                    <div class="row">
-                        <div class="col input-field s5">
-                            <select id="exersice" name="exersice" class="validate" autofocus>
-                                <option value="1">Option 1</option>
-                                <option value="2">Option 2</option>
-                                <option value="3">Option 3</option>
-                            </select>
-                            <label for="exersice">Ejercicio</label>
-                        </div>
-                        <div class="col input-field s7">
-                            <input type="date" id="date" name="date" class="validate" required>
-                            <label for="date">Fecha</label>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col input-field s12">
-                            <input type="text" id="descripcion" name="descripcion" class="validate" required>
-                            <label for="descripcion">Descripción</label>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col s12">
-                        <span class="card-title center-align">Operaciones</span>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <table class="centered">
-                            <thead>
-                                <tr>
-                                    <th>Cuenta</th>
-                                    <th>Debe</th>
-                                    <th>Haber</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                <tr>
-                                    <td>
-                                    <select>
+                            <div class="row">
+                                <div class="col input-field s5">
+                                    <select id="exersice" name="exersice" class="validate" autofocus>
                                         <option value="1">Option 1</option>
                                         <option value="2">Option 2</option>
                                         <option value="3">Option 3</option>
                                     </select>
-                                    </td>
-                                    <td><input type="text" value="600000"></td>
-                                    <td><input type="text"></td>
-                                    <td>
-                                        <i class="material-icons delete">delete_sweep</i>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                    <select>
-                                        <option value="1">Option 1</option>
-                                        <option value="2">Option 2</option>
-                                        <option value="3">Option 3</option>
-                                    </select>
-                                    </td>
-                                    <td><input type="text"></td>
-                                    <td><input type="text"></td>
-                                    <td>
-                                        <i class="material-icons new">playlist_add</i>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                                    <label for="exersice">Ejercicio</label>
+                                </div>
+                                <div class="col input-field s7">
+                                    <input type="date" id="date" name="date" class="validate" required>
+                                    <label for="date">Fecha</label>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col input-field s12">
+                                    <input type="text" id="descripcion" name="descripcion" class="validate" required>
+                                    <label for="descripcion">Descripción</label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col s6 offset-s1">
-                            <button class="btn waves-effect waves-light" type="submit">
-                                <i class="material-icons left">save</i>
-                                Guardar
-                            </button>
+                    <div class="col m8">
+                        <div class="card-content">
+
+                            <div class="row">
+                                <div class="col s12">
+                                <span class="card-title center-align">Operaciones</span>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <table class="centered">
+                                    <thead>
+                                        <tr>
+                                            <th>Cuenta</th>
+                                            <th>Debe</th>
+                                            <th>Haber</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                            <select>
+                                                <option value="1">Option 1</option>
+                                                <option value="2">Option 2</option>
+                                                <option value="3">Option 3</option>
+                                            </select>
+                                            </td>
+                                            <td><input type="number" value="600000"></td>
+                                            <td><input type="number"></td>
+                                            <td>
+                                                <i class="material-icons delete">delete_sweep</i>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                            <select>
+                                                <option value="1">Option 1</option>
+                                                <option value="2">Option 2</option>
+                                                <option value="3">Option 3</option>
+                                            </select>
+                                            </td>
+                                            <td><input type="number"></td>
+                                            <td><input type="number"></td>
+                                            <td>
+                                                <i class="material-icons new">playlist_add</i>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="row">
+                                <div class="col s6 offset-s1">
+                                    <button class="btn waves-effect waves-light" type="submit">
+                                        <i class="material-icons left">save</i>
+                                        Guardar
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </form>
+        </div>
+        <div class="row">
             <!-- </div> -->
             <!-- Lista de ejercicios contables -->
-            <div class="col s12 m6">
+            <div class="col s12 m12">
                 <div class="card hoverable">
                     <div class="card-content">
                         <span class="card-title center-align">Lista de asientos contables</span>
