@@ -11,7 +11,7 @@
             <ul id="nav-mobile" class="left hide-on-med-and-down">
                 <li><a href="/">Inicio</a></li>
                 <li><a href="/exercises">Ejecrcicios</a></li>
-                <li><a href="/cuentas">Cuentas</a></li>
+                <li><a href="/accounts">Cuentas</a></li>
                 <li><a href="asientos">Asientos</a></li>
                 <li>
                     <a href="#" class="dropdown-trigger" data-target="book_drop">
@@ -33,7 +33,7 @@
 <ul class="sidenav" id="menu-responsive">
     <li><a href="/">Inicio</a></li>
     <li><a href="/exercises">  Ejecrcicios</a></li>
-    <li><a href="/cuentas">     Cuentas</a></li>
+    <li><a href="/accounts">     Cuentas</a></li>
     <li><a href="asientos">     Asientos</a></li>
     <li class="divider"></li>
     <li><a href="ldiario">      Libro diario</a></li>
