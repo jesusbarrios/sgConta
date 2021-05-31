@@ -82,53 +82,5 @@
 
     <!-- Footer -->
     <?php $this->load->view('footer'); ?>
-
-
-    <ul id="libro_drop" class="dropdown-content">
-        <li><a href="ldiario">Diario</a></li>
-        <li class="divider"></li>
-        <li><a href="lmayor">Mayor</a></li>
-        <li class="divider"></li>
-    </ul>
-    <ul id="user_drop" class="dropdown-content">
-        <li><a href="password">Contraseño</a></li>
-        <li class="divider"></li>
-        <li><a href="logout">Salir</a></li>
-        <li class="divider"></li>
-    </ul>
-
-    <!--Import jQuery before materialize.js-->
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var elems = document.querySelectorAll('.sidenav');
-            var instances = M.Sidenav.init(elems);
-            M.AutoInit()
-        });
-         $(document).ready(function(){
-            $("#frmLogin").submit(function(e){
-                e.preventDefault();
-                // blockUI_();
-                $.post('<?=$_SERVER["REQUEST_URI"]?>', $("#frmLogin").serialize(), function (respuesta) {
-                    if ( !respuesta )
-                        M.toast({
-                            html: 'Datos de usuario incorrectos',
-                            displayLength: 2500,
-                            inDuration: 1000,
-                            outDuration:1000,
-                            classes: "red"
-                        });
-                    else {
-                        alert('ok')
-                        location.reload();
-                    }
-                    // setValue(respuesta);
-                    // unblockUI_();
-                });
-            })
-         });
-    </script>
 </body>
 </html>
