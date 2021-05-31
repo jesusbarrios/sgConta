@@ -26,7 +26,11 @@ class Exercises extends CI_Controller {
     else
       $min = date('Y');
 
-      $this->load->view('exercises', array('min' => $min, 'max' => date('Y') + 1));
+      $this->load->view('exercises', array(
+        'min'   => $min,
+        'max'   => date('Y') + 1,
+        'lista' => $this->load->view('exercisesList', false, true)
+      ));
 
       return;
 

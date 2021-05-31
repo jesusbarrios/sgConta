@@ -19,12 +19,12 @@
     <div class="container section">
         <div class="row">
             <!-- <div class="col s12 m6"> -->
-            <form class="card hoverable col s12 m6" actions="" id="frm" name="frm">
+            <form class="card hoverable col s12 m5" actions="" id="frm" name="frm">
                 <div class="card-content">
                     <span class="card-title center-align">Ejercicios Contables</span>
 
                     <div class="row">
-                        <div class="col input-field s3">
+                        <div class="col input-field s4">
                             <input type="number" id="year" name="year" class="validate" min="<?= $min?>" max="<?= $max ?>" required autofocus >
                             <label for="year">Año</label>
                         </div>
@@ -48,6 +48,15 @@
                 </div>
             </form>
             <!-- </div> -->
+            <!-- Lista de ejercicios contables -->
+            <div class="col s12 m7">
+                <div class="card hoverable">
+                    <div class="card-content">
+                        <span class="card-title center-align">Lista de ejercicios contables</span>
+                        <?= $lista ?>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <?php $this->load->view('footer') ?>
@@ -60,6 +69,16 @@
          $(document).ready(function(){
             $("#frm").submit(function(e){
                 e.preventDefault();
+                $.post('<?=$_SERVER["REQUEST_URI"]?>', $("#frm").serialize(), function (attrib) {
+                    datas = $.parseJSON(attrib);
+                    M.toast({
+                        html: datas.html,
+                        displayLength: 2500,
+                        inDuration: 1000,
+                        outDuration:1000,
+                        classes: datas.clases
+                    });
+                });
             })
          });
     </script>
