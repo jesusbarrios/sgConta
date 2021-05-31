@@ -10,7 +10,7 @@
 
             <ul id="nav-mobile" class="left hide-on-med-and-down">
                 <li><a href="/">Inicio</a></li>
-                <li><a href="/ejercicios">Ejecrcicios</a></li>
+                <li><a href="/exercises">Ejecrcicios</a></li>
                 <li><a href="/cuentas">Cuentas</a></li>
                 <li><a href="asientos">Asientos</a></li>
                 <li>
@@ -32,7 +32,7 @@
 
 <ul class="sidenav" id="menu-responsive">
     <li><a href="/">Inicio</a></li>
-    <li><a href="/ejercicios">  Ejecrcicios</a></li>
+    <li><a href="/exercises">  Ejecrcicios</a></li>
     <li><a href="/cuentas">     Cuentas</a></li>
     <li><a href="asientos">     Asientos</a></li>
     <li class="divider"></li>
