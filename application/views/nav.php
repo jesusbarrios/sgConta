@@ -10,7 +10,7 @@
 
             <ul id="nav-mobile" class="left hide-on-med-and-down">
                 <li><a href="/">Inicio</a></li>
-                <li><a href="/ejercicios">Ejecrcicios</a></li>
+                <li><a href="/exercises">Ejecrcicios</a></li>
                 <li><a href="/cuentas">Cuentas</a></li>
                 <li><a href="asientos">Asientos</a></li>
                 <li>
@@ -32,7 +32,7 @@
 
 <ul class="sidenav" id="menu-responsive">
     <li><a href="/">Inicio</a></li>
-    <li><a href="/ejercicios">  Ejecrcicios</a></li>
+    <li><a href="/exercises">  Ejecrcicios</a></li>
     <li><a href="/cuentas">     Cuentas</a></li>
     <li><a href="asientos">     Asientos</a></li>
     <li class="divider"></li>
@@ -60,6 +60,9 @@
     <li class="divider"></li>
 </ul>
 
+<!--Import jQuery before materialize.js-->
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 <script>
      document.addEventListener('DOMContentLoaded', function() {
         var elems = document.querySelectorAll('.sidenav');
