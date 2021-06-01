@@ -21,16 +21,17 @@ class Exercises extends CI_Controller {
     else
       $min = date('Y');
     $param = array(
+      'id'  => false,
       'min' => $min,
       'max' => date('Y') + 1
     );
 
     if ( $this->input->post() ) {
-      if ( $this->input->post('action') == 'btnSave')
+      if ( $this->input->post('action') == 'add' || $this->input->post('action') == 'save')
         $this->save();
-      if ( $this->input->post('action') == 'delete')
+      else if ( $this->input->post('action') == 'delete')
         $this->delete();
-      if ( $this->input->post('action') == 'edit') {
+      else if ( $this->input->post('action') == 'edit') {
         $ejercicio = $this->Jesus->dice(array(
           'get'   => 'ejercicios',
           'where' => array('id' => $this->input->post('value'))
@@ -40,13 +41,17 @@ class Exercises extends CI_Controller {
           'html'			=> "Listo para modificar",
           'head'   => $this->load->view('exercisesHead', array_merge( $param, $ejercicio), true)
         ));
+      }else if ( $this->input->post('action') == 'btnNew') {
+        echo json_encode(array(
+          'clases'		=> 'blue-grey darken-1',
+          'html'			=> "Listo para agregar",
+          'head'   => $this->load->view('exercisesHead', $param, true)
+        ));
       }
       return;
     }
-    
-    
 
-      $this->load->view('exercises', array(
+    $this->load->view('exercises', array(
         'head'    => $this->load->view('exercisesHead', $param, true),
         'details' => $this->load->view('exercisesDetails', false, true)
       ));
@@ -69,8 +74,6 @@ class Exercises extends CI_Controller {
   }
 
   private function delete() {
-    $id = $this->input->post('value');
-
     $this->Jesus->dice(array(
       'update'  => 'ejercicios',
       'set'     => array('estado' => 'D'),
@@ -81,26 +84,55 @@ class Exercises extends CI_Controller {
       'html'			=> 'Se elimino exitosamente',
       'details'   => $this->load->view('exercisesDetails', false, true)
     ));
-    
     return true;
   }
-  function save() {
+  private function save() {
+    $id           = $this->input->post('id');
     $year         = $this->input->post('year');
     $denominacion = $this->input->post('denominacion');
-    if ( !$this->checkExistence( $year, $denominacion))
+    if ( !$this->checkExistence( $year, $denominacion, $id))
       return false;
+    // Update
+    if ( $id ) {
+      if ( $this->Jesus->dice(array(
+        'get' => 'ejercicios',
+        'where' => array(
+          'id'      => $id,
+          'estado'  => 'T'
+        )
+      ))->result() ) {
+        $this->Jesus->dice(array(
+          'update'    => 'ejercicios',
+          'set'       => array(
+            'anho'          => $year,
+            'denominacion'  => $denominacion
+          ),
+          'where'   => array('id' => $id)
+        ));
+        echo json_encode(array(
+          'clases'		=> 'green',
+          'html'			=> 'Se actualizo exitosamente',
+          'details'   => $this->load->view('exercisesDetails', false, true)
+        ));
+      } else
+        echo json_encode(array(
+          'clases'		=> 'red',
+          'html'			=> 'El ejercicio contable fue eliminado',
+          'details'   => $this->load->view('exercisesDetails', false, true)
+        ));
     // Insert
-    $this->Jesus->dice(array('insert' => array('ejercicios' => array(
-      'anho'          => $year,
-      'denominacion'  => $denominacion,
-      'estado'        => 'T'
-    ))));
-
-    echo json_encode(array(
-      'clases'		=> 'green',
-      'html'			=> 'Se guardo exitosamente',
-      'details'   => $this->load->view('exercisesDetails', false, true)
-    ));
+    } else {
+      $this->Jesus->dice(array('insert' => array('ejercicios' => array(
+        'anho'          => $year,
+        'denominacion'  => $denominacion,
+        'estado'        => 'T'
+      ))));
+      echo json_encode(array(
+        'clases'		=> 'green',
+        'html'			=> 'Se guardo exitosamente',
+        'details'   => $this->load->view('exercisesDetails', false, true)
+      ));
+    }
     
     return true;
   }
@@ -126,14 +158,15 @@ class Exercises extends CI_Controller {
     return true;
   }
 
-  private function checkExistence( $year, $denominacion ) {
+  private function checkExistence( $year, $denominacion, $id = false ) {
     // Año
     if ( $this->Jesus->dice(array(
       'get'   => 'ejercicios',
       'where' => array(
         'anho'    => $year,
         'estado'  => 'T'
-      )
+      ),
+      'where_not_in'  => array('id' => $id)
     ))->result() ) {
       echo json_encode(array(
         'clases'		=> 'red',
@@ -148,7 +181,8 @@ class Exercises extends CI_Controller {
       'where' => array(
         'denominacion'  => $denominacion,
         'estado'        => 'T'
-      )
+      ),
+      'where_not_in'  => array('id' => $id)
     ))->result() ) {
       echo json_encode(array(
         'clases'		=> 'red',
