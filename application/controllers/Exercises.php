@@ -92,21 +92,35 @@ class Exercises extends CI_Controller {
     $denominacion = $this->input->post('denominacion');
     if ( !$this->checkExistence( $year, $denominacion, $id))
       return false;
-    // Insert
+    // Update
     if ( $id ) {
-      $this->Jesus->dice(array(
-        'update'    => 'ejercicios',
-        'set'       => array(
-          'anho'          => $year,
-          'denominacion'  => $denominacion
-        ),
-        'where'   => array('id' => $id)
-      ));
-      echo json_encode(array(
-        'clases'		=> 'green',
-        'html'			=> 'Se actualizo exitosamente',
-        'details'   => $this->load->view('exercisesDetails', false, true)
-      ));
+      if ( $this->Jesus->dice(array(
+        'get' => 'ejercicios',
+        'where' => array(
+          'id'      => $id,
+          'estado'  => 'T'
+        )
+      ))->result() ) {
+        $this->Jesus->dice(array(
+          'update'    => 'ejercicios',
+          'set'       => array(
+            'anho'          => $year,
+            'denominacion'  => $denominacion
+          ),
+          'where'   => array('id' => $id)
+        ));
+        echo json_encode(array(
+          'clases'		=> 'green',
+          'html'			=> 'Se actualizo exitosamente',
+          'details'   => $this->load->view('exercisesDetails', false, true)
+        ));
+      } else
+        echo json_encode(array(
+          'clases'		=> 'red',
+          'html'			=> 'El ejercicio contable fue eliminado',
+          'details'   => $this->load->view('exercisesDetails', false, true)
+        ));
+    // Insert
     } else {
       $this->Jesus->dice(array('insert' => array('ejercicios' => array(
         'anho'          => $year,

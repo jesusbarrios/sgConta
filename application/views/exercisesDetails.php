@@ -19,7 +19,12 @@
                 array('data' => $ejercicios_->denominacion, 'style'=> 'text-align:left'),
                 '0',
                 "<i class='material-icons edit' name='edit' value=$ejercicios_->id>edit</i>
-                <i class='material-icons delete' name='delete' value=$ejercicios_->id>delete</i>"
+                <i class='material-icons delete' href='#modal1' name='delete' value=$ejercicios_->id>delete</i>",
+/*
+                '<a class="modal-trigger" href="#confirm">
+                    <i class="material-icons">delete</i>
+                </a>'
+*/
             ));
         }
         $this->table->set_heading(array(
@@ -33,9 +38,25 @@
     }
 ?>
 
+<!-- Modal Structure -->
+<!-- <div id="confirm" class="modal">
+    <div class="modal-content">
+        <h4>Por favor confirme</h4>
+        <p>¿Estas seguro que quieres eliminar?</p>
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="btn modal-close">Canceler</a>
+        <a href="#" class="btn modal-close btnDelete" id="deleteId" name="delete" value="1">Eliminar</a>
+    </div>
+-->
+</div>
+
 <script>
     $(document).ready(function(){
-        $(".delete").click(function(e)  { request($(this))})
+        $(".delete").click(function(e)  {
+            if( confirm('Confirmar eliminación') )
+                request($(this))
+        })
         $(".edit").click(function(e)    { request($(this))})
         function request(e) {
             $.post('<?=$_SERVER["REQUEST_URI"]?>',  $("form").serialize() + "&action=" + e.attr('name') + "&value=" + e.attr('value'), function (attrib) {
@@ -58,5 +79,10 @@
                 }
             });
         }
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('.modal');
+        var instances = M.Modal.init(elems);
     });
 </script>
