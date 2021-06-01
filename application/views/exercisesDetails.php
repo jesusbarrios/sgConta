@@ -18,8 +18,8 @@
                 $ejercicios_->anho,
                 array('data' => $ejercicios_->denominacion, 'style'=> 'text-align:left'),
                 '0',
-                // "<i class='material-icons edit' name='edit' value=$ejercicios_->id>edit</i>
-                "<i class='material-icons delete' name='delete' value=$ejercicios_->id>delete</i>"
+                "<i class='material-icons edit' name='edit' value=$ejercicios_->id>edit</i>
+                <i class='material-icons delete' name='delete' value=$ejercicios_->id>delete</i>"
             ));
         }
         $this->table->set_heading(array(
@@ -49,8 +49,13 @@
                 });
                 if (datas.details)
                     $('#details').html(datas.details);
-                if (datas.head)
+                if (datas.head){
                     $('#head').html(datas.head);
+                    $('#year').focus()
+                    temp = $('#year').val();
+                    $('#year').val('');
+                    $('#year').val(temp)
+                }
             });
         }
     });
