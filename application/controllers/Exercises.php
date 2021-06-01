@@ -11,11 +11,6 @@ class Exercises extends CI_Controller {
 	}
 
   function index() {
-    /*echo json_encode(array(
-      'clases'		=> 'red',
-      'html'			=> 'hola mundo',
-    ));
-    return;*/
     // Empresa
     if ($company_ = $this->Jesus->dice(array(
       'get'       => 'empresas as t1',
@@ -25,11 +20,35 @@ class Exercises extends CI_Controller {
       $min = $company_['year'];
     else
       $min = date('Y');
+    $param = array(
+      'min' => $min,
+      'max' => date('Y') + 1
+    );
+
+    if ( $this->input->post() ) {
+      if ( $this->input->post('action') == 'btnSave')
+        $this->save();
+      if ( $this->input->post('action') == 'delete')
+        $this->delete();
+      if ( $this->input->post('action') == 'edit') {
+        $ejercicio = $this->Jesus->dice(array(
+          'get'   => 'ejercicios',
+          'where' => array('id' => $this->input->post('value'))
+        ))->row_array();
+        echo json_encode(array(
+          'clases'		=> 'blue-grey darken-1',
+          'html'			=> "Listo para modificar",
+          'head'   => $this->load->view('exercisesHead', array_merge( $param, $ejercicio), true)
+        ));
+      }
+      return;
+    }
+    
+    
 
       $this->load->view('exercises', array(
-        'min'   => $min,
-        'max'   => date('Y') + 1,
-        'lista' => $this->load->view('exercisesList', false, true)
+        'head'    => $this->load->view('exercisesHead', $param, true),
+        'details' => $this->load->view('exercisesDetails', false, true)
       ));
 
       return;
@@ -49,73 +68,95 @@ class Exercises extends CI_Controller {
     }
   }
 
-  function userValidate($attr = false ) {
-    // Usuario
-    $this->db->join('personas as t2', 't2.id = t1.persona_id', 'left');
-    $this->db->join('roles as t3', 't3.id = t1.rol_id', 'left');
-    if ( $user_ = $this->Jesus->dice(array(
-      'get'   => 'usuarios as t1',
+  private function delete() {
+    $id = $this->input->post('value');
+
+    $this->Jesus->dice(array(
+      'update'  => 'ejercicios',
+      'set'     => array('estado' => 'D'),
+      'where'   => array('id' => $this->input->post('value'))
+    ));
+    echo json_encode(array(
+      'clases'		=> 'green',
+      'html'			=> 'Se elimino exitosamente',
+      'details'   => $this->load->view('exercisesDetails', false, true)
+    ));
+    
+    return true;
+  }
+  function save() {
+    $year         = $this->input->post('year');
+    $denominacion = $this->input->post('denominacion');
+    if ( !$this->checkExistence( $year, $denominacion))
+      return false;
+    // Insert
+    $this->Jesus->dice(array('insert' => array('ejercicios' => array(
+      'anho'          => $year,
+      'denominacion'  => $denominacion,
+      'estado'        => 'T'
+    ))));
+
+    echo json_encode(array(
+      'clases'		=> 'green',
+      'html'			=> 'Se guardo exitosamente',
+      'details'   => $this->load->view('exercisesDetails', false, true)
+    ));
+    
+    return true;
+  }
+
+  function update() {
+    $year         = $this->input->post('year');
+    $denominacion = $this->input->post('denominacion');
+    if ( !$this->checkExistence( $year, $denominacion))
+      return false;
+    // Insert
+    /*$this->Jesus->dice(array('insert' => array('ejercicios' => array(
+      'anho'          => $year,
+      'denominacion'  => $denominacion,
+      'estado'        => 'T'
+    ))));*/
+
+    echo json_encode(array(
+      'clases'		=> 'green',
+      'html'			=> 'Se actualizo exitosamente',
+      'details'   => $this->load->view('exercisesDetails', false, true)
+    ));
+    
+    return true;
+  }
+
+  private function checkExistence( $year, $denominacion ) {
+    // Año
+    if ( $this->Jesus->dice(array(
+      'get'   => 'ejercicios',
       'where' => array(
-        't1.password'   => $attr['password'],
-        't1.estado'     => 'T',
-        't2.documento'  => $attr['user']
-      ),
-      'select'  => array(
-        't1.id as user_id',
-        't1.rol_id',
-        'DATE_FORMAT(t1.loged_at,	" %d/%c/%Y %T") as loged_at',
-        'concat(t2.nombres, " ", t2.apellidos ) as usuario',
-        't3.denominacion as rol',
-        "FORMAT(t2.documento, 0, 'de_DE') as documento",
+        'anho'    => $year,
+        'estado'  => 'T'
       )
-    ))->row_array() ) {
-
-      // Sesion data
-      $data = array(
-        'user_id'   => $user_['user_id'],
-        'usuario'   => $user_['usuario'],
-        'rol_id'    => $user_['rol_id'],
-        'loged_at'  => $user_['loged_at'],
-        'rol'       => $user_['rol'],
-        'documento' => $user_['documento']
-      );
-
-      // Empresa
-      $this->db->join('personas as t2', 't2.id = t1.persona_id', 'left');
-      if ($company_ = $this->Jesus->dice(array(
-        'get'       => 'empresas as t1',
-        'order_by'  => array('t1.id' => 'desc'),
-        // 'limit'     => 1,
-        'select'    => array(
-          't1.persona_id',
-          'concat_ws(" ", t2.nombres, t2.apellidos) as empresa',
-          't2.ruc',
-          'DATE_FORMAT(t1.inicioActividad,	" %d/%c/%Y") as inicioActividad',
-          'DATE_FORMAT(t2.fechaNacimiento,	" %d/%c/%Y") as constitucion'
-        )
-      ))->row_array() ) {
-
-        // Sesion data
-          $data = array_merge($data, array(
-            'empresa'           => $company_['empresa'],
-            'ruc'               => $company_['ruc'],
-            'inicioActividad'   => $company_['inicioActividad'],
-            'constitucion'      => $company_['constitucion']
-          ));
-        }
-
-        // Update logedAt
-      $this->Jesus->dice(array(
-        'update'  => 'usuarios',
-        'set'     => array('loged_at' => date("Y-m-d H:i:s")),
-        'where'   => array('id' => $user_['user_id'])
+    ))->result() ) {
+      echo json_encode(array(
+        'clases'		=> 'red',
+        'html'			=> 'El año ya existe',
       ));
-
-      // Sesion data
-      $this->session->set_userdata('logged_in', $data);
-      return true;
+      return false;
     }
-    return false;
+
+    // Denominacion
+    if ( $this->Jesus->dice(array(
+      'get'   => 'ejercicios',
+      'where' => array(
+        'denominacion'  => $denominacion,
+        'estado'        => 'T'
+      )
+    ))->result() ) {
+      echo json_encode(array(
+        'clases'		=> 'red',
+        'html'			=> 'La denominación ya existe',
+      ));
+      return false;
+    }
+    return true;
   }
 }
 ?>
