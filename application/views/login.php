@@ -24,16 +24,16 @@
 
     <div class="container section">
         <div class="row">
-             <div class="col s12 m4 center">
-                <form class="card hoverable center" actions="" id="frmLogin" name="frmLogin">
+             <div class="col s12 m4 offset-m4">
+                <form class="card hoverable " actions="" id="frmLogin" name="frmLogin">
                     <div class="card-content">
                         <span class="card-title center-align">Acceso al sistema</span>
                         <div class="s12 input-field">
-                            <input type="text" id="user" name="user" class="validate" required value="36022677">
+                            <input type="text" id="user" name="user" class="validate" required value="">
                             <label for="user">Usuario</label>
                         </div>
                         <div class="s12 input-field">
-                            <input type="password" id="password" name="password" class="validate" required value="noneman">
+                            <input type="password" id="password" name="password" class="validate" required value="">
                             <label for="password">contraseña</label>
                         </div>
                         <div class="s12 offset-s1">
