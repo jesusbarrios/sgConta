@@ -24,8 +24,8 @@
 
     <div class="container section">
         <div class="row">
-             <div class="col s12 m4 center">
-                <form class="card hoverable center" actions="" id="frmLogin" name="frmLogin">
+             <div class="col s12 m4 offset-m4">
+                <form class="card hoverable " actions="" id="frmLogin" name="frmLogin">
                     <div class="card-content">
                         <span class="card-title center-align">Acceso al sistema</span>
                         <div class="s12 input-field">
