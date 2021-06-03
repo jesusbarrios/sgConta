@@ -72,6 +72,10 @@
                                     <td>Inicio de actividad</td>
                                     <td><?=$this->sesion['inicioActividad']?></td>
                                 </tr>
+                                <tr>
+                                    <td>Ejercicio activo</td>
+                                    <td><?=$this->sesion['ejercicio']?></td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -79,7 +83,6 @@
             </div>
         </div>
     </div>
-
     <!-- Footer -->
     <?php $this->load->view('footer'); ?>
 </body>

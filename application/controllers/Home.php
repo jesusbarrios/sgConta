@@ -73,13 +73,34 @@ class Home extends CI_Controller {
       ))->row_array() ) {
 
         // Sesion data
-          $data = array_merge($data, array(
-            'empresa'           => $company_['empresa'],
-            'ruc'               => $company_['ruc'],
-            'inicioActividad'   => $company_['inicioActividad'],
-            'constitucion'      => $company_['constitucion']
-          ));
-        }
+        $data = array_merge($data, array(
+          'empresa'           => $company_['empresa'],
+          'ruc'               => $company_['ruc'],
+          'inicioActividad'   => $company_['inicioActividad'],
+          'constitucion'      => $company_['constitucion']
+        ));
+      }
+
+      // Ejercicio
+      if ( $ejercicio_ = $this->Jesus->dice(array(
+        'get'     => 'ejercicios',
+        'where'   => array('activo' => 1),
+        'select'  => array(
+          'id',
+          'anho as ejercicio'
+          )
+        // 'select'  => array('CONCAT(anho, ", ", denominacion) AS ejercicio')
+      ))->row_array() )
+        // Sesion data
+        $data = array_merge($data, array(
+          'ejercicio'     => $ejercicio_['ejercicio'],
+          'ejercicio_id'  => $ejercicio_['id']
+        ));
+      else
+      $data = array_merge($data, array(
+        'ejercicio'   => 'Sin ejercicio',
+        'idEjercicio' => false
+      ));
 
         // Update logedAt
       $this->Jesus->dice(array(
