@@ -136,12 +136,21 @@ class Exercises extends CI_Controller {
         'activo'        => $activo? 1 : 0,
         'estado'        => 'T'
       ))));
+      $id = mysql_insert_id();
       echo json_encode(array(
         'clases'		=> 'green',
         'html'			=> 'Se guardo exitosamente',
         'details'   => $this->load->view('exercisesDetails', false, true)
       ));
     }
+    if ( $activo )
+      $this->session->set_userdata('logged_in', array_replace(
+        $this->sesion,
+        array(
+          'ejercicio'     => $year,
+          'ejercicio_id'  => $id
+        )
+      ));
     return true;
   }
 
