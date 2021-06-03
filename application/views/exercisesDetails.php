@@ -11,12 +11,21 @@
         'where' => array(
             'estado'    => 'T'
         ),
+        'select'    => array(
+            'id',
+            'anho',
+            'denominacion',
+            'activo'
+        ),
         'order_by'  => array('anho' => 'desc')
     ))->result() ) {
         foreach( $ejercicios as $ejercicios_) {
             $this->table->add_row(array(
                 $ejercicios_->anho,
                 array('data' => $ejercicios_->denominacion, 'style'=> 'text-align:left'),
+                $ejercicios_->activo?
+                    "<i class='material-icons green-text'>check</i>"
+                    : "<i class='material-icons gray-text'>remove</i>",
                 '0',
                 "<i class='material-icons edit' name='edit' value=$ejercicios_->id>edit</i>
                 <i class='material-icons delete' href='#modal1' name='delete' value=$ejercicios_->id>delete</i>",
@@ -30,8 +39,9 @@
         $this->table->set_heading(array(
             'Años',
             'Denominaciones',
+            'Activo',
             'Asientos',
-            'Operaciones'
+            array('data' => 'Operaciones', 'colspan' => '2')
         ));
         $this->table->set_template(array('table_open' => '<table cellspacing= "0", border="0", class= "responsive-table centered highlight">'));
         echo $this->table->generate();
@@ -48,8 +58,8 @@
         <a href="#" class="btn modal-close">Canceler</a>
         <a href="#" class="btn modal-close btnDelete" id="deleteId" name="delete" value="1">Eliminar</a>
     </div>
--->
 </div>
+-->
 
 <script>
     $(document).ready(function(){

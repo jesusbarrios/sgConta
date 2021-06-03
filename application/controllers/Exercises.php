@@ -90,8 +90,15 @@ class Exercises extends CI_Controller {
     $id           = $this->input->post('id');
     $year         = $this->input->post('year');
     $denominacion = $this->input->post('denominacion');
+    $activo       = $this->input->post('activo');
     if ( !$this->checkExistence( $year, $denominacion, $id))
       return false;
+    
+    if ( $activo )
+      $this->Jesus->dice(array(
+        'update'  => 'ejercicios',
+        'set'     => array('activo' => 0)
+      ));
     // Update
     if ( $id ) {
       if ( $this->Jesus->dice(array(
@@ -105,7 +112,8 @@ class Exercises extends CI_Controller {
           'update'    => 'ejercicios',
           'set'       => array(
             'anho'          => $year,
-            'denominacion'  => $denominacion
+            'denominacion'  => $denominacion,
+            'activo'        => $activo? 1 : 0
           ),
           'where'   => array('id' => $id)
         ));
@@ -125,6 +133,7 @@ class Exercises extends CI_Controller {
       $this->Jesus->dice(array('insert' => array('ejercicios' => array(
         'anho'          => $year,
         'denominacion'  => $denominacion,
+        'activo'        => $activo? 1 : 0,
         'estado'        => 'T'
       ))));
       echo json_encode(array(
@@ -133,28 +142,6 @@ class Exercises extends CI_Controller {
         'details'   => $this->load->view('exercisesDetails', false, true)
       ));
     }
-    
-    return true;
-  }
-
-  function update() {
-    $year         = $this->input->post('year');
-    $denominacion = $this->input->post('denominacion');
-    if ( !$this->checkExistence( $year, $denominacion))
-      return false;
-    // Insert
-    /*$this->Jesus->dice(array('insert' => array('ejercicios' => array(
-      'anho'          => $year,
-      'denominacion'  => $denominacion,
-      'estado'        => 'T'
-    ))));*/
-
-    echo json_encode(array(
-      'clases'		=> 'green',
-      'html'			=> 'Se actualizo exitosamente',
-      'details'   => $this->load->view('exercisesDetails', false, true)
-    ));
-    
     return true;
   }
 
