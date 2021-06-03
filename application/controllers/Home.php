@@ -6,6 +6,7 @@ class Home extends CI_Controller {
   function __construct(){
 		parent::__construct();
     $this->sesion = $this->session->userdata('logged_in');
+    $this->db->query("SET lc_time_names = 'es_ES'");
 	}
 
   function index() {
