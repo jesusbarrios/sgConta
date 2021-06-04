@@ -136,7 +136,7 @@ class Exercises extends CI_Controller {
         'activo'        => $activo? 1 : 0,
         'estado'        => 'T'
       ))));
-      $id = mysql_insert_id();
+      $id = $this->db->insert_id();
       echo json_encode(array(
         'clases'		=> 'green',
         'html'			=> 'Se guardo exitosamente',
