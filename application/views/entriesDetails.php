@@ -1,57 +1,43 @@
 <!-- Lista de ejercicios contables -->
 <style>
-    .edit, .new, .delete{cursor:pointer;}
-    .edit:hover, .new:hover{color:green;}
-    .delete:hover{color:red;}
+    .material-icons{cursor:pointer;}
+    i:hover{color:gray;}
 </style>
-<span class="card-title center-align">Lista de asientos contables de <?= date("d/m/d", strtotime($date))?></span>
+<span class="card-title center-align">Lista de asientos contables de <?= date("d/m/Y", strtotime($date))?></span>
 <?php
-// echo $date . " --";
-    // $this->db->join('cuentas as t2', 't2.id = t1.cuenta_id', 'left');
-    // $this->db->join('asientos as t3', 't3.id = t1.asiento_id', 'left');
     if ( $asientos = $this->Jesus->dice(array(
         'get'   => 'asientos as t1',
         'where' => array(
-            't1.estado'    => 'T',
-            // 't3.estado'    => 'T',
-            't1.fecha >='  => $date . " 00:00:00",
-            't1.fecha <='  => $date . " 23:59:59"
+            't1.estado' => 'T',
+            't1.fecha'  => $date,
         ),
         'select'    => array(
             't1.descripcion',
-            'DATE_FORMAT(t1.fecha,	"%T") as hora',
-            // 't1.denominacion as cuenta',
-            // 't2.codigo as cuenta_code',
-            't1.totalDebe',
-            // 't1.haber'
+            't1.numero',
+            'FORMAT(t1.totalDebe, 0, "de_DE") as totalDebe',
+            '(SELECT COUNT(t2.id) FROM asientoDetalles as t2 WHERE t2.asiento_id = t1.id) as cuentas'
         ),
         'order_by'  => array('t1.id' => 'desc')
     ))->result() ) {
         $asiento_descripcion = "";
         foreach( $asientos as $asientos_ ) {
-            /*
-            if ( $asiento_descripcion != $asientos_->descripcion)
-                $this->table->add_row(array(
-                    'data'      => $asiento_descripcion = $asientos_->descripcion,
-                    'colspan'   => '4',
-                    'style'     => "text-align:center; fotn-style:bold;"
-                ));
-            */
+
             $this->table->add_row(array(
-                $asientos_->hora,
-                $asientos_->descripcion,
-                '0',
+                $asientos_->numero,
+                array(
+                    'data' => $asientos_->descripcion,
+                    'style' => 'text-align:left;',
+                ),
+                $asientos_->cuentas,
                 $asientos_->totalDebe
             ));
         }
-    // if (true) {
         $this->table->set_heading(array(
-            'Horas',
+            'Números de<br>asiento',
             'Descripciones',
-            'Operaciones',
+            'Cantidades de<br>cuentas',
             'Montos'
         ));
-        
     } else
         $this->table->add_row(array('Sin registros'));
 
