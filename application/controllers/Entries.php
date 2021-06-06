@@ -12,99 +12,128 @@ class Entries extends CI_Controller {
 
   function index( $endpoint = false ) {
 
-    
-
+    // Registrar en la base de datos
     if ( $parametros = $this->input->post() ) {
+      $this->accountsValidate( $parametros );
       $this->insert($parametros);
       return;
     }
-    
-    
 
+    // Consulta de datos
     if ( $this->input->get() ) {
-      // print_r($this->input->get());
-      // return;
       if ( $endpoint == 'accounts' ) {
         echo json_encode($this->accountSlcMake());
         return;
       } else if ( $endpoint == 'details' ) {
-        // print_r($this->input->get());
         $parametros = $this->input->get();
-        // echo $parametros['date'];
-
-        // echo $this->input->post()['date'];
         echo json_encode(array(
           'details' => $this->load->view('entriesDetails', array('date' => $parametros['date']), true)
+          // 'details'   => $this->load->view('entriesDetails', array('date' => date("Y-m-d", strtotime($datetime))), true)
         ));
         return;
       }
     }
 
+    // Varga de la primera vista
     $this->load->view('entries', array(
-      // 'options' => json_encode($this->accountSlcMake()),
       'head'    => $this->load->view('entriesHead', array('date' => $this->sesion['ejercicio'] . date('-m-d')), true),
       'details' => $this->load->view('entriesDetails', array('date' => $this->sesion['ejercicio'] . date('-m-d')), true)
     ));
     return;
   }
 
-  private function insert($parametros) {
-    // echo $parametros['date'];
-    // print_r($parametros);
-    // return;
+  function accountsValidate( $parametros ) {
     $year = date('Y', strtotime($parametros['date']));
-    if ( $this->sesion['ejercicio'] != $year )
+    if ( $this->sesion['ejercicio'] != $year ) {
       echo json_encode(array(
         'clases'		=> 'red',
         'html'			=> 'Incoherencia con el ejercicio activo'
       ));
-    else if ( $parametros['totalDebe'] != $parametros['totalHaber'] )
+      return false;
+    } else if ( $parametros['totalDebe'] != $parametros['totalHaber'] ) {
       echo json_encode(array(
         'clases'		=> 'red',
         'html'			=> 'No cumple la partida dobre'
       ));
-    else {
-      $datetime = date('Y-m-d H:i:s');
-      
-      $this->Jesus->dice(array('insert' => array('asientos' => array(
-        'ejercicio_id'  => $this->sesion['ejercicio_id'],
-        'fecha'         => $datetime,
-        'descripcion'   => $parametros['descripcion'],
-        'totalDebe'     => $parametros['totalDebe'],
-        'totalHaber'    => $parametros['totalHaber'],
-        'estado'        => 'T'
-      ))));
-      $entrie_id = $this->db->insert_id();
-      
-      // print_r($parametros['account']);
-      
-      foreach( $parametros['account'] as $key => $account_value ){
-        $account_code = explode(' ', $account_value)[0];
-        $account_ = $this->Jesus->dice(array(
-          'get'     => 'cuentas',
-          'where'   => array(
-            'codigo'  => $account_code,
+      return false;
+    } else {
+      foreach($parametros['account'] as $key => $val ) {
+        $account = explode( " ", $val );
+        if ( !$account_ = $this->Jesus->dice(array(
+          'get'   => 'cuentas',
+          'where' => array(
+            'codigo'  => $account[0],
             'estado'  => 'T'
-          ),
-          'select'  => array('id')
-        ))->row_array();
-        // echo $parametros['haber'][$key] . br();
-        $this->Jesus->dice(array('insert' => array('asientoDetalles' => array(
-          'asiento_id'  => $entrie_id,
-          'cuenta_id'   => $account_['id'],
-          'debe'        => $parametros['debe'][$key],
-          'haber'       => $parametros['haber'][$key],
-          'estado'      => 'T'
-        ))));
-
+            )
+        ))->row_array() ) {
+          echo json_encode(array(
+            'clases'		=> 'red',
+            'html'			=> "No existe la cuenta \"$val\"",
+          ));
+          return false;
+        } else if ( !$account_['imputable'] ) {
+          echo json_encode(array(
+            'clases'		=> 'red',
+            'html'			=> "La cuenta \"$val\" no es imputable",
+          ));
+          return false;
+        }
       }
-      echo json_encode(array(
-        'clases'		=> 'green',
-        'html'			=> 'Se agrego exitosamente',
-        'details'   => $this->load->view('entriesDetails', array('date' => date("Y-m-d", strtotime($datetime))), true)
-      ));
     }
-    return;
+    return true;
+  }
+
+  private function insert($parametros) {
+    $createAt = date('Y-m-d H:i:s');
+    $numero = 1;
+    if ( $entrie_ = $this->Jesus->dice(array(
+      'get' => 'asientos',
+      'where' => array(
+        'ejercicio_id'  => $this->sesion['ejercicio_id'],
+        'estado'        => 'T',
+        'numero !='    => NULL
+      ),
+      'limit'     => 1,
+      'order_by'  => array('numero' => 'desc')
+    ))->row_array() )
+      $numero += $entrie_['numero'];
+    $this->Jesus->dice(array('insert' => array('asientos' => array(
+      'ejercicio_id'  => $this->sesion['ejercicio_id'],
+      'numero'        => $numero,
+      'fecha'         => $parametros['date'],
+      'descripcion'   => $parametros['descripcion'],
+      'totalDebe'     => $parametros['totalDebe'],
+      'totalHaber'    => $parametros['totalHaber'],
+      'createAt'      => $createAt,
+      'estado'        => 'T'
+    ))));
+    $entrie_id = $this->db->insert_id();
+    $contador = 0;
+    foreach( $parametros['account'] as $key => $account_value ){
+      $contador ++;
+      $account_code = explode(' ', $account_value)[0];
+      $account_ = $this->Jesus->dice(array(
+        'get'     => 'cuentas',
+        'where'   => array(
+          'codigo'  => $account_code,
+          'estado'  => 'T'
+        ),
+        'select'  => array('id')
+      ))->row_array();
+      $this->Jesus->dice(array('insert' => array('asientoDetalles' => array(
+        'asiento_id'  => $entrie_id,
+        'cuenta_id'   => $account_['id'],
+        'debe'        => isset($parametros['debe'][$key])?  $parametros['debe'][$key]   : NULL,
+        'haber'       => isset($parametros['haber'][$key])? $parametros['haber'][$key]  : NULL,
+        'estado'      => 'T'
+      ))));
+      
+    }
+    echo json_encode(array(
+      'clases'		=> 'green',
+      'html'			=> 'Se agrego exitosamente ' . $contador,
+      'details'   => $this->load->view('entriesDetails', array('date' => $parametros['date']), true)
+    ));
   }
 
   private function accountSlcMake() {
@@ -113,13 +142,14 @@ class Entries extends CI_Controller {
         'get'       => 'cuentas',
         'where'     => array(
           'estado'    => 'T',
-          'imputable' => 'T'
+          'imputable' => true
         ),
         'order_by'  => array('codigo' => 'asc'),
     ))->result() )
       foreach($accounts as $accounts_)
         $options[$accounts_->codigo . " " . $accounts_->denominacion] = NULL;
       return $options;
+    return $options;
   }
 }
 ?>
