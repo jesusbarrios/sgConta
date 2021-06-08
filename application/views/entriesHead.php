@@ -116,9 +116,7 @@
                 if (datas.details)
                     $('#details').html(datas.details);
             });
-            
         });
-
         $.get('<?=$_SERVER["REQUEST_URI"]?>/accounts',  $("#frm").serialize(), function (attrib) {
             $('input.autocomplete').autocomplete({
                 data : $.parseJSON(attrib),
@@ -204,8 +202,6 @@
     };
 
     function compare(x, fName) {
-
-
         if ( $(x).attr('name') == "debe[" + fName + "]" ) {
             if ( $('input[name="debe[' + fName + ']"]').val() )
                 $('input[name="haber[' + fName + ']"]').prop('disabled', true).removeClass('validate invalid').prop('required', false);
