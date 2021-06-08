@@ -88,7 +88,6 @@
             e.preventDefault()
             if ( compare() ) {
                 $.post('<?=$_SERVER["REQUEST_URI"]?>', $("#frm").serialize(), function (attrib) {
-                    alert(attrib);
                     datas = $.parseJSON(attrib);
                     M.toast({
                         html:           datas.html,
@@ -116,7 +115,6 @@
                 datas = $.parseJSON(attrib);
                 if (datas.details)
                     $('#details').html(datas.details);
-                alert( attrib );
             });
             
         });

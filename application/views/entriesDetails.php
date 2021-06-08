@@ -29,14 +29,17 @@
                     'style' => 'text-align:left;',
                 ),
                 $asientos_->cuentas,
-                $asientos_->totalDebe
+                $asientos_->totalDebe,
+                "<i class='material-icons edit' name='edit' value=$ejercicios_->id>edit</i>
+                <i class='material-icons delete' href='#modal1' name='delete' value=$ejercicios_->id>delete</i>"
             ));
         }
         $this->table->set_heading(array(
             'Números de<br>asiento',
             'Descripciones',
             'Cantidades de<br>cuentas',
-            'Montos'
+            'Montos',
+            'Acciones'
         ));
     } else
         $this->table->add_row(array('Sin registros'));
