@@ -117,7 +117,6 @@
                     $('#details').html(datas.details);
             });
         });
-
         $.get('<?=$_SERVER["REQUEST_URI"]?>/accounts',  $("#frm").serialize(), function (attrib) {
             $('input.autocomplete').autocomplete({
                 data : $.parseJSON(attrib),

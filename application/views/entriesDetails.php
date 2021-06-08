@@ -32,7 +32,7 @@
                 $asientos_->cuentas,
                 $asientos_->totalDebe,
                 "<i class='material-icons edit' name='edit' value=$asientos_->id>edit</i>
-                <i class='material-icons delete' href='#modal1' name='delete' value=$asientos_->id>delete</i>",
+                <i class='material-icons delete' href='#modal1' name='delete' value=$asientos_->id>delete</i>"
             ));
         }
         $this->table->set_heading(array(
