@@ -36,8 +36,8 @@
     <li><a href="/accounts">     Cuentas</a></li>
     <li><a href="entries">     Asientos</a></li>
     <li class="divider"></li>
-    <li><a href="ldiario">      Libro diario</a></li>
-    <li><a href="lmayor">       Libro mayor</a></li>
+    <li><a href="diarybook">      Libro diario</a></li>
+    <li><a href="ledger">       Libro mayor</a></li>
     <li class="divider"></li>
     <li><a href="informatios">  Datos personales</a></li>
     <li><a href="password">     Contraseña</a></li>
@@ -45,9 +45,9 @@
 </ul>
 
 <ul id="book_drop" class="dropdown-content">
-    <li><a href="ldiario">  Diario</a></li>
+    <li><a href="diarybook">  Diario</a></li>
     <li class="divider"></li>
-    <li><a href="lmayor">   Mayor</a></li>
+    <li><a href="ledger">   Mayor</a></li>
     <li class="divider"></li>
 </ul>
 
