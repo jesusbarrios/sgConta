@@ -69,7 +69,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col s6 offset-s1">
+                    <div class="col s6 right">
                         <button class="btn waves-light" type="submit">
                             <i class="material-icons left">save</i>
                             Guardar
