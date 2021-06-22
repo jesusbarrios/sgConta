@@ -50,20 +50,24 @@
                             <input type="number" min="0" name="haber[1]" class="haber validate right-align" value="" onkeyup="compare(this, 1);return false;" required>
                         </div>
                         <div class="col m2 input-field center">
-                            <a href="#" onclick="addRow(this);return false;" title="Agregar fila" class="btn-floating material-icons" value="1"><i class="material-icons addRow">add</i></a>
+                            <a href="#" onclick="removeRow(this);return false;" title="Eliminar fila" class="btn-floating material-icons" value="2"><i class="material-icons">remove</i></a>
                         </div>
                     </div>
-
+                </div>
+                <div class="row row-1">
+                    <div class="col offset-m10 m2 input-field center">
+                        <a href="#" onclick="addRow(2);return false;" title="Agregar fila" class="btn-floating material-icons" value="2"><i class="material-icons addRow">add</i></a>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col m6 center input-field">
                         <h7>Total</h7>
                     </div>
                     <div class="col m2 input-field">
-                        <input type="number" min="0" readonly name="totalDebe" class="totalDebe" >
+                        <input type="number" min="0" readonly disabled name="totalDebe" class="totalDebe" >
                     </div>
                     <div class="col m2 input-field">
-                        <input type="number" min="0" readonly name="totalHaber" class="totalHaber" >
+                        <input type="number" min="0" readonly disabled name="totalHaber" class="totalHaber" >
                     </div>
                     <div class="col m2 center"></div>
                 </div>
@@ -83,10 +87,42 @@
 
 <script>
     $(document).ready(function(){
+        /*$(".debe").on({
+    "focus": function (event) {
+        $(event.target).select();
+    },
+    "keyup": function (event) {
+        $(event.target).val(function (index, value ) {
+            // alert();
+            return value.replace(/\D/g, "")
+                        .replace(/([0-9])([0-9]{2})$/, '$1.$2')
+                        .replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ".");
+        });
+    }
+});*/
+        /*
+        $(".debe").on('input', function (event) {
+            alert()
+            $(event.target).val(function (index, value ) {
+                // return value.replace(/[^0-9]/g,'');//Ambas formas funcionan muy bien
+                return value.replace(/\D/g, ".");
+            });
+        });*/
+        //Separador de miles
+	$(".debe").on('input', function (event) {
+	       $(event.target).val(function (index, value ) {
+	            return value.replace(/\D/g, "")
+                        // .replace(/([0-9])([0-9]{3})$/, '$1.$2')//Separa centavos
+                        .replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ".");//Separa miles
+	        });
+	    }
+	);
         xOp = 1;
         $("#frm").submit(function(e)    {
             e.preventDefault()
             if ( compare() ) {
+                $('.totalDebe').prop('disabled', false);
+                $('.totalHaber').prop('disabled', false);
                 $.post('<?=$_SERVER["REQUEST_URI"]?>', $("#frm").serialize(), function (attrib) {
                     datas = $.parseJSON(attrib);
                     M.toast({
@@ -99,6 +135,8 @@
                     if (datas.details)
                         $('#details').html(datas.details);
                 });
+                $('.totalDebe').prop('disabled', true);
+                $('.totalHaber').prop('disabled', true);
             } else {
                 M.toast({
                     html:           "No cumple la partida doble",
@@ -134,9 +172,8 @@
     }
 
     function addRow(x) {
-        $('.addRow').html("remove").removeClass("addRow");
-        $('a[onclick="addRow(this);return false;"]').attr("onclick", "removeRow(this);return false;");
-        xOp ++;
+        $('a[onclick="addRow(' + x + ');return false;"]').attr("onclick", "addRow(" + (x + 1) + ");return false;");
+        xOp  = x;
         var ac1 = document.createElement("input");
         ac1.setAttribute("type", "text");
         ac1.setAttribute("size", "70");
@@ -171,11 +208,12 @@
 
         //Accion
         var acc1 = document.createElement("i");
-        acc1.setAttribute("class", "material-icons addRow");
-        acc1.innerHTML = "add";
+        acc1.setAttribute("class", "material-icons");
+        acc1.innerHTML = "remove";
         var acc2 = document.createElement("a");
-        acc2.setAttribute("onclick", "addRow(this);return false;");
+        acc2.setAttribute("onclick", "removeRow(this);return false;");
         acc2.setAttribute("class", "btn-floating validate");
+        acc2.setAttribute("title", "Eliminar fila");
         acc2.setAttribute("href", "#");
         acc2.setAttribute("value", xOp);
         acc2.append(acc1);
