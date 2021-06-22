@@ -64,10 +64,10 @@
                         <h7>Total</h7>
                     </div>
                     <div class="col m2 input-field">
-                        <input type="number" min="0" readonly name="totalDebe" class="totalDebe" >
+                        <input type="number" min="0" readonly disabled name="totalDebe" class="totalDebe" >
                     </div>
                     <div class="col m2 input-field">
-                        <input type="number" min="0" readonly name="totalHaber" class="totalHaber" >
+                        <input type="number" min="0" readonly disabled name="totalHaber" class="totalHaber" >
                     </div>
                     <div class="col m2 center"></div>
                 </div>
@@ -87,10 +87,42 @@
 
 <script>
     $(document).ready(function(){
+        /*$(".debe").on({
+    "focus": function (event) {
+        $(event.target).select();
+    },
+    "keyup": function (event) {
+        $(event.target).val(function (index, value ) {
+            // alert();
+            return value.replace(/\D/g, "")
+                        .replace(/([0-9])([0-9]{2})$/, '$1.$2')
+                        .replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ".");
+        });
+    }
+});*/
+        /*
+        $(".debe").on('input', function (event) {
+            alert()
+            $(event.target).val(function (index, value ) {
+                // return value.replace(/[^0-9]/g,'');//Ambas formas funcionan muy bien
+                return value.replace(/\D/g, ".");
+            });
+        });*/
+        //Separador de miles
+	$(".debe").on('input', function (event) {
+	       $(event.target).val(function (index, value ) {
+	            return value.replace(/\D/g, "")
+                        // .replace(/([0-9])([0-9]{3})$/, '$1.$2')//Separa centavos
+                        .replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ".");//Separa miles
+	        });
+	    }
+	);
         xOp = 1;
         $("#frm").submit(function(e)    {
             e.preventDefault()
             if ( compare() ) {
+                $('.totalDebe').prop('disabled', false);
+                $('.totalHaber').prop('disabled', false);
                 $.post('<?=$_SERVER["REQUEST_URI"]?>', $("#frm").serialize(), function (attrib) {
                     datas = $.parseJSON(attrib);
                     M.toast({
@@ -103,6 +135,8 @@
                     if (datas.details)
                         $('#details').html(datas.details);
                 });
+                $('.totalDebe').prop('disabled', true);
+                $('.totalHaber').prop('disabled', true);
             } else {
                 M.toast({
                     html:           "No cumple la partida doble",
