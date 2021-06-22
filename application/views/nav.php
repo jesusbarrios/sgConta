@@ -20,6 +20,12 @@
                     </a>
                 </li>
                 <li>
+                    <a href="#" class="dropdown-trigger" data-target="balance_drop">
+                        Balances
+                        <i class="material-icons right">arrow_drop_down</i>
+                    </a>
+                </li>
+                <li>
                     <a href="#" class="dropdown-trigger" data-target="user_drop">
                         Usuario
                         <i class="material-icons right">arrow_drop_down</i>
@@ -33,11 +39,14 @@
 <ul class="sidenav" id="menu-responsive">
     <li><a href="/">Inicio</a></li>
     <li><a href="/exercises">  Ejecrcicios</a></li>
-    <li><a href="/accounts">     Cuentas</a></li>
+    <li><a href="/accounts">   Cuentas</a></li>
     <li><a href="entries">     Asientos</a></li>
     <li class="divider"></li>
-    <li><a href="diarybook">      Libro diario</a></li>
+    <li><a href="diarybook">    Libro diario</a></li>
     <li><a href="ledger">       Libro mayor</a></li>
+    <li class="divider"></li>
+    <li><a href="balanceSheet">    Balance general</a></li>
+    <li><a href="resultsBalance">  Balance de resultados</a></li>
     <li class="divider"></li>
     <li><a href="informatios">  Datos personales</a></li>
     <li><a href="password">     Contraseña</a></li>
@@ -48,6 +57,13 @@
     <li><a href="diarybook">  Diario</a></li>
     <li class="divider"></li>
     <li><a href="ledger">   Mayor</a></li>
+    <li class="divider"></li>
+</ul>
+
+<ul id="balance_drop" class="dropdown-content">
+    <li><a href="balanceSheet">     General</a></li>
+    <li class="divider"></li>
+    <li><a href="resultsBalance">   Resultados</a></li>
     <li class="divider"></li>
 </ul>
 
