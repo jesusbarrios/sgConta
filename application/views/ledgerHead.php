@@ -16,63 +16,29 @@
     <div class="row">
         <div class="col m12">
             <div class="card-content">
-                <div class="toAdd">
-                    <span class="card-title center-align">Asiento Contable</span>
-
-                    <div class="row">
-                        <div class="col input-field s3">
-                            <input type="date" id="date" name="date" min="<?=$this->sesion['ejercicio']?>-01-01" value="<?=$date?>" max="<?=$this->sesion['ejercicio']?>-12-31" class="validate center" required autofocus>
-                            <label for="date">Fecha</label>
-                        </div>
-                        <div class="col input-field s9">
-                            <textarea  id="descripcion" name="descripcion" class="materialize-textarea validate" maxlength="100" required data-length="100"></textarea>
-                            <label for="descripcion">Descripción</label>
-                        </div>
+                <!-- <span class="card-title center-align">Libro diario</span> -->
+                <div class="row">
+                    <div class="col input-field s9">
+                        <textarea  id="descripcion" name="descripcion" class="materialize-textarea validate" maxlength="100" required data-length="100" autofocus></textarea>
+                        <label for="descripcion">Cuenta</label>
                     </div>
-
-                    <!-- Cabecera -->
-                    <div class="row">
-                        <div class="col m6 center"><h6>Cuentas  </h6></div>
-                        <div class="col m2 center"><h6>Debe     </h6></div>
-                        <div class="col m2 center"><h6>Haber    </h6></div>
-                        <div class="col m2 center"><h6>Acciones </h6></div>
-                    </div>
-
-                    <!-- Cuenta -->
-                    <div class="row row-1">
-                        <div class="col m6 input-field">
-                            <input type="text" size="70" id="autocomplete-input" name="account[1]" class="autocomplete validate" required>
-                        </div>
-                        <div class="col m2 input-field">
-                            <input type="number" min="0" name="debe[1]" class="debe validate right-align" value=""  onkeyup="compare(this, 1);return false;" required>
-                        </div>
-                        <div class="col m2 input-field">
-                            <input type="number" min="0" name="haber[1]" class="haber validate right-align" value="" onkeyup="compare(this, 1);return false;" required>
-                        </div>
-                        <div class="col m2 input-field center">
-                            <a href="#" onclick="addRow(this);return false;" title="Agregar fila" class="btn-floating material-icons" value="1"><i class="material-icons addRow">add</i></a>
-                        </div>
-                    </div>
-
                 </div>
                 <div class="row">
-                    <div class="col m6 center input-field">
-                        <h7>Total</h7>
+                    <div class="col input-field s4">
+                        <!-- <input type="date" id="date" name="date" min="<?=$this->sesion['ejercicio']?>-01-01" value="<?=$date?>" max="<?=$this->sesion['ejercicio']?>-12-31" class="validate center" required autofocus> -->
+                        <input type="date" id="date" name="date" min="<?=$this->sesion['ejercicio']?>-01-01" value="<?=$date?>" max="<?=$this->sesion['ejercicio']?>-12-31" class="validate center" required >
+                        <label for="date">Desde</label>
                     </div>
-                    <div class="col m2 input-field">
-                        <input type="number" min="0" readonly name="totalDebe" class="totalDebe" >
+                    <div class="col input-field s4">
+                    <input type="date" id="date" name="date" min="<?=$this->sesion['ejercicio']?>-01-01" value="<?=$date?>" max="<?=$this->sesion['ejercicio']?>-12-31" class="validate center" required autofocus>
+                        <label for="date">Hasta</label>
                     </div>
-                    <div class="col m2 input-field">
-                        <input type="number" min="0" readonly name="totalHaber" class="totalHaber" >
-                    </div>
-                    <div class="col m2 center"></div>
-                </div>
-
-                <div class="row">
-                    <div class="col s6 right">
-                        <button class="btn waves-light red" type="submit">
-                            <i class="material-icons left">save</i>
-                            Guardar
+                <!-- </div> -->
+                <!-- <div class="row"> -->
+                    <div class="col s4 right">
+                        <button class="btn red waves-light" type="submit">
+                            <!-- <i class="material-icons left">save</i> -->
+                            Generar libro
                         </button>
                     </div>
                 </div>

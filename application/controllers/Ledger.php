@@ -1,5 +1,5 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-class Diarybook extends CI_Controller {
+class Ledger extends CI_Controller {
 
   public $sesion;
 
@@ -28,7 +28,7 @@ class Diarybook extends CI_Controller {
       } else if ( $endpoint == 'details' ) {
         $parametros = $this->input->get();
         echo json_encode(array(
-          'details' => $this->load->view('entriesDetails', array('date' => $parametros['date']), true)
+          'details' => $this->load->view('ledgerDetails', array('date' => $parametros['date']), true)
           // 'details'   => $this->load->view('entriesDetails', array('date' => date("Y-m-d", strtotime($datetime))), true)
         ));
         return;
@@ -37,14 +37,12 @@ class Diarybook extends CI_Controller {
 
     // Varga de la primera vista
     $data = array(
-      // 'desde' => '2022-06-07',
-      // 'hasta' => '2022-06-07'
-      'desde' => date('Y-m-d'),
-      'hasta' => date('Y-m-d')
+      'desde' => '2022-06-07',
+      'hasta' => '2022-06-07'
     );
     $this->load->view('entries', array(
-      'head'    => $this->load->view('diarybookHead', array('date' => $this->sesion['ejercicio'] . date('-m-d')), true),
-      'details' => $this->load->view('diarybookDetails', $data, true)
+      'head'    => $this->load->view('ledgerHead', array('date' => $this->sesion['ejercicio'] . date('-m-d')), true),
+      'details' => $this->load->view('ledgerDetails', $data, true)
     ));
     return;
   }

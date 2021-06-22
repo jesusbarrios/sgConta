@@ -65,7 +65,7 @@ class Home extends CI_Controller {
         // 'limit'     => 1,
         'select'    => array(
           't1.persona_id',
-          'concat_ws(" ", t2.nombres, t2.apellidos) as empresa',
+          'concat_ws(", ", t2.nombres, t2.apellidos) as empresa',
           't2.ruc',
           'DATE_FORMAT(t1.inicioActividad,	" %d/%c/%Y") as inicioActividad',
           'DATE_FORMAT(t2.fechaNacimiento,	" %d/%c/%Y") as constitucion'

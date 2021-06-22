@@ -9,8 +9,10 @@
         'get'   => 'asientos as t1',
         'where' => array(
             't1.estado' => 'T',
-            't1.fecha >='  => $desde,
-            't1.fecha <='  => $hasta
+            // 't1.fecha >='  => $desde,
+            // 't1.fecha <='  => $hasta
+            't1.fecha >='  => '2021-06-15',
+            't1.fecha <='  => '2021-06-15'
         ),
         'select'    => array(
             't1.id',
@@ -88,8 +90,9 @@
             $this->table->add_row(array(
                 false,
                 array(
-                    'data' => 'TOTAL',
-                    'style' => 'text-align:center;',
+                    'data' => 'TOTAL:',
+                    // 'style' => 'text-align:center;',
+                    'style' => 'text-align:right;',
                     'colspan'   => '1'
                 ),
                 array(

@@ -29,18 +29,18 @@
         <div class="row">
             <div class="col s6">
                 <?php if ($id){ ?>
-                <button class="btn waves-light" type="submit" name="btnSave" id="btnSave">
+                <button class="btn red waves-light" type="submit" name="btnSave" id="btnSave">
                     <i class="material-icons left">save</i>
                     Guardar
                 </button>
             </div>
             <div class="col s6">
-                <button class="btn waves-light" type="button" name="btnNew" id="btnNew">
+                <button class="btn red waves-light" type="button" name="btnNew" id="btnNew">
                     <i class="material-icons left">autorenew</i>
                     Nuevo
                 </button>
                 <?php } else { ?>
-                <button class="btn waves-light" type="submit" name="btnSave" id="btnSave">
+                <button class="btn red waves-light" type="submit" name="btnSave" id="btnSave">
                     <i class="material-icons left">add</i>
                     Agregar
                 </button>

@@ -76,6 +76,8 @@ $query_builder = TRUE;
 $db['default'] = array(
 	'dsn'			=> '',
 	'hostname'		=> 'localhost',
+	// 'username'		=> 'ingsoftc_wilson',
+	// 'database'		=> 'ingsoftc_sgconta',
 	'username'		=> 'root',
 	'database'		=> 'sgconta',
 	'dbdriver'		=> 'mysqli',
@@ -93,6 +95,7 @@ $db['default'] = array(
 	'failover'		=> array(),
 	'save_queries'	=> TRUE,
 	'password'		=> '',
+	// 'password'		=> 'noneman',
 );
 
 

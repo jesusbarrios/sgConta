@@ -20,7 +20,7 @@
                 <div class="row">
                     <div class="col input-field s4">
                         <!-- <input type="date" id="date" name="date" min="<?=$this->sesion['ejercicio']?>-01-01" value="<?=$date?>" max="<?=$this->sesion['ejercicio']?>-12-31" class="validate center" required autofocus> -->
-                        <input type="date" id="date" name="date" min="<?=$this->sesion['ejercicio']?>-01-01" value="<?=$this->sesion['ejercicio']?>-01-01" max="<?=$this->sesion['ejercicio']?>-12-31" class="validate center" required autofocus>
+                        <input type="date" id="date" name="date" min="<?=$this->sesion['ejercicio']?>-01-01" value="<?=$date?>" max="<?=$this->sesion['ejercicio']?>-12-31" class="validate center" required autofocus>
                         <label for="date">Desde</label>
                     </div>
                     <div class="col input-field s4">
@@ -30,7 +30,7 @@
                 <!-- </div> -->
                 <!-- <div class="row"> -->
                     <div class="col s4 right">
-                        <button class="btn waves-light" type="submit">
+                        <button class="btn red waves-light" type="submit">
                             <!-- <i class="material-icons left">save</i> -->
                             Generar libro
                         </button>
