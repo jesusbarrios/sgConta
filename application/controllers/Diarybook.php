@@ -12,8 +12,9 @@ class Diarybook extends CI_Controller {
 	}
 
   function index( $endpoint = false ) {
-
     // Registrar en la base de datos
+    // echo $endpoint;
+    // return;
     if ( $parametros = $this->input->post() ) {
       $this->accountsValidate( $parametros );
       $this->insert($parametros);
@@ -22,28 +23,40 @@ class Diarybook extends CI_Controller {
 
     // Consulta de datos
     if ( $this->input->get() ) {
-      if ( $endpoint == 'accounts' ) {
-        echo json_encode($this->accountSlcMake());
+      $parametros = $this->input->get();
+      if ( $endpoint == 'report' ) {
+        $data = array(
+          'desde' => $parametros['since'],
+          'hasta' => $parametros['until']
+        );
+        echo json_encode(array(
+          'details' => $this->load->view('diarybookDetails', $data, true)
+        ));
         return;
       } else if ( $endpoint == 'details' ) {
         $parametros = $this->input->get();
         echo json_encode(array(
-          'details' => $this->load->view('entriesDetails', array('date' => $parametros['date']), true)
-          // 'details'   => $this->load->view('entriesDetails', array('date' => date("Y-m-d", strtotime($datetime))), true)
+          'details' => $this->load->view('diarybookDetails', array('date' => $parametros['date']), true)
         ));
         return;
       }
     }
 
-    // Varga de la primera vista
-    $data = array(
-      // 'desde' => '2022-06-07',
-      // 'hasta' => '2022-06-07'
-      'desde' => date('Y-m-d'),
-      'hasta' => date('Y-m-d')
-    );
-    $this->load->view('entries', array(
-      'head'    => $this->load->view('diarybookHead', array('date' => $this->sesion['ejercicio'] . date('-m-d')), true),
+    //Si el ejercicio activo coincide con el año actual toma la fecha actual.
+    if ( $this->sesion['ejercicio'] == date('Y') )
+      $data = array(
+        'desde' => date('Y-m-d'),
+        'hasta' => date('Y-m-d')
+      );
+    else
+      $data = array(
+        'desde' => $this->sesion['ejercicio'] . '-01-01',
+        'hasta' => $this->sesion['ejercicio'] . '-12-31'
+      );
+
+    $this->load->view('container', array(
+      'titulo'  => 'Libro diario',
+      'head'    => $this->load->view('diarybookHead', $data, true),
       'details' => $this->load->view('diarybookDetails', $data, true)
     ));
     return;
