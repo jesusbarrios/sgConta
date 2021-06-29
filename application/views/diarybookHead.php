@@ -29,6 +29,7 @@
                 <!-- <i class="material-icons left">save</i> -->
                 Generar libro
             </button>
+            <!-- <button class="btn red waves-light" type="submit" onclick="exportF(this);"> -->
             <button class="btn red waves-light" type="submit" onclick="saveAsExcel('libroDiario', 'libroDiario.xls');">
                 <!-- <i class="material-icons left">save</i> -->
                 Exportar
@@ -40,6 +41,16 @@
 <script type="text/javascript" src="js/saveAsExcel.js"></script>
 
 <script>
+    function exportF(elem) {
+        var table = document.getElementById("libroDiario");
+        var html = table.outerHTML;
+        var url = 'data:application/vnd.ms-excel,' + escape(html); // Set your html table into url 
+        elem.setAttribute("href", url);
+        elem.setAttribute("download", "export.xls"); // Choose the file name
+        console.log(url)
+        // return;
+        return false;
+    }
         function generateReport() {
             $.get('<?=$_SERVER["REQUEST_URI"]?>/report', $('form').serialize(), function (attrib) {
                 // $('#details').html(attrib);
