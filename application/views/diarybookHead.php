@@ -12,40 +12,72 @@
         margin-bottom: 30px;
     }
 </style>
-<form class="card hoverable col s12 m12" actions="" id="frm" name="frm" action="add">
+<form actions="" id="frm" name="frm" action="" method=''>
     <div class="row">
-        <div class="col m12">
-            <div class="card-content">
-                <!-- <span class="card-title center-align">Libro diario</span> -->
-                <div class="row">
-                    <div class="col input-field s4">
-                        <!-- <input type="date" id="date" name="date" min="<?=$this->sesion['ejercicio']?>-01-01" value="<?=$date?>" max="<?=$this->sesion['ejercicio']?>-12-31" class="validate center" required autofocus> -->
-                        <input type="date" id="date" name="date" min="<?=$this->sesion['ejercicio']?>-01-01" value="<?=$date?>" max="<?=$this->sesion['ejercicio']?>-12-31" class="validate center" required autofocus>
-                        <label for="date">Desde</label>
-                    </div>
-                    <div class="col input-field s4">
-                    <input type="date" id="date" name="date" min="<?=$this->sesion['ejercicio']?>-01-01" value="<?=$date?>" max="<?=$this->sesion['ejercicio']?>-12-31" class="validate center" required autofocus>
-                        <label for="date">Hasta</label>
-                    </div>
-                <!-- </div> -->
-                <!-- <div class="row"> -->
-                    <div class="col s4 right">
-                        <button class="btn red waves-light" type="submit">
-                            <!-- <i class="material-icons left">save</i> -->
-                            Generar libro
-                        </button>
-                    </div>
-                </div>
-            </div>
+        <div class="col input-field s4">
+            <input type="date" id="date" name="since" min="<?=$this->sesion['ejercicio']?>-01-01" value="<?=$desde?>" max="<?=$this->sesion['ejercicio']?>-12-31" class="validate center" required autofocus>
+            <label for="date">Desde</label>
+        </div>
+        <div class="col input-field s4">
+            <input type="date" id="date" name="until" min="<?=$this->sesion['ejercicio']?>-01-01" value="<?=$hasta?>" max="<?=$this->sesion['ejercicio']?>-12-31" class="validate center" required autofocus>
+            <label for="date">Hasta</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12">
+            <button class="btn red waves-light" type="submit" name="btnReport" id='btnReport' onclick="generateReport();return false;">
+                <!-- <i class="material-icons left">save</i> -->
+                Generar libro
+            </button>
+            <!-- <button class="btn red waves-light" type="submit" onclick="exportF(this);"> -->
+            <button class="btn red waves-light" type="submit" onclick="saveAsExcel('libroDiario', 'libroDiario.xls');">
+                <!-- <i class="material-icons left">save</i> -->
+                Exportar
+            </button>
         </div>
     </div>
 </form>
 
+<script type="text/javascript" src="js/saveAsExcel.js"></script>
+
 <script>
+    function exportF(elem) {
+        var table = document.getElementById("libroDiario");
+        var html = table.outerHTML;
+        var url = 'data:application/vnd.ms-excel,' + escape(html); // Set your html table into url 
+        elem.setAttribute("href", url);
+        elem.setAttribute("download", "export.xls"); // Choose the file name
+        console.log(url)
+        // return;
+        return false;
+    }
+        function generateReport() {
+            $.get('<?=$_SERVER["REQUEST_URI"]?>/report', $('form').serialize(), function (attrib) {
+                // $('#details').html(attrib);
+                datas = $.parseJSON(attrib);
+                // console.log(datas.details);
+                $('#details').html(datas.details);
+                // console.log(attrib);
+
+                /*datas = $.parseJSON(attrib);
+                M.toast({
+                    html:           datas.html,
+                    displayLength:  2500,
+                    inDuration:     1000,
+                    outDuration:    1000,
+                    classes:        datas.clases
+                });
+                if (datas.details)
+                    $('#details').html(datas.details);
+                */
+            });
+        }
     $(document).ready(function(){
-        xOp = 1;
-        $("#frm").submit(function(e)    {
+        // xOp = 1;
+        $('form').submit(function(e)    {
             e.preventDefault()
+            // alert()
+            /*
             if ( compare() ) {
                 $.post('<?=$_SERVER["REQUEST_URI"]?>', $("#frm").serialize(), function (attrib) {
                     datas = $.parseJSON(attrib);
@@ -67,9 +99,9 @@
                     outDuration:    1000,
                     classes:        "red"
                 });
-            }
+            }*/
         })
-
+/*
         $( "#date" ).change(function() {
             $.get('<?=$_SERVER["REQUEST_URI"]?>/details',  $("#frm").serialize(), function (attrib) {
                 datas = $.parseJSON(attrib);
@@ -84,6 +116,7 @@
         });
 
         $('textarea#descripcion').characterCounter();
+*/
     });
 
     function removeRow(x){
