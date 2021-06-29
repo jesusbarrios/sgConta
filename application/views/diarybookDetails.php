@@ -23,7 +23,7 @@
         'order_by'  => array('t1.numero' => 'asc')
     ));
     if ( $asientos->result() ) {
-        $this->table->set_caption("Libro diario desde $desde hasta $hasta.");
+        $this->table->set_caption("Libro diario desde " . date('d/m/Y', strtotime($desde)) . " hasta " . date('d/m/Y', strtotime($hasta)));
         $asiento_descripcion = "";
         foreach( $asientos->result() as $asientos_ ) {
 
