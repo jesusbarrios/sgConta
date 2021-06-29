@@ -109,14 +109,14 @@
             });
         });*/
         //Separador de miles
-	$(".debe").on('input', function (event) {
+	/*$(".debe").on('input', function (event) {
 	       $(event.target).val(function (index, value ) {
 	            return value.replace(/\D/g, "")
                         // .replace(/([0-9])([0-9]{3})$/, '$1.$2')//Separa centavos
                         .replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ".");//Separa miles
 	        });
 	    }
-	);
+	);*/
         xOp = 1;
         $("#frm").submit(function(e)    {
             e.preventDefault()
