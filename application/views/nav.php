@@ -45,8 +45,8 @@
     <li><a href="diarybook">    Libro diario</a></li>
     <li><a href="ledger">       Libro mayor</a></li>
     <li class="divider"></li>
-    <li><a href="balanceSheet">    Balance general</a></li>
-    <li><a href="resultsBalance">  Balance de resultados</a></li>
+    <li><a href="balancesheet">    Balance general</a></li>
+    <li><a href="resultsbalance">  Balance de resultados</a></li>
     <li class="divider"></li>
     <li><a href="informatios">  Datos personales</a></li>
     <li><a href="password">     Contraseña</a></li>
@@ -61,9 +61,9 @@
 </ul>
 
 <ul id="balance_drop" class="dropdown-content">
-    <li><a href="balanceSheet">     General</a></li>
+    <li><a href="balancesheet">     General</a></li>
     <li class="divider"></li>
-    <li><a href="resultsBalance">   Resultados</a></li>
+    <li><a href="resultsbalance">   Resultados</a></li>
     <li class="divider"></li>
 </ul>
 
