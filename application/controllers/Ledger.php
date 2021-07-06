@@ -13,6 +13,27 @@ class Ledger extends CI_Controller {
 
   function index( $endpoint = false ) {
 
+    // Reporte
+    if ( $this->input->get() ) {
+      $parametros = $this->input->get();
+       if ( $parametros['since'] > $parametros['until'])
+        echo json_encode(array(
+          'clases'		=> 'red',
+          'html'			=> 'Fechas incoherentes'
+        ));
+      else
+        echo json_encode(array(
+          'clases'		=> 'green',
+          'html'			=> 'Reporte generado',
+          'details' => $this->load->view('ledgerDetails', array(
+            'since' => $parametros['since'],
+            'until' => $parametros['until'],
+            'cuentas' => isset($parametros['cuentas'])? $parametros['cuentas'] : false
+          ), true)
+        ));
+      return;
+    }
+
     // Registrar en la base de datos
     if ( $parametros = $this->input->post() ) {
       $this->accountsValidate( $parametros );
@@ -35,14 +56,20 @@ class Ledger extends CI_Controller {
       }
     }
 
-    // Varga de la primera vista
-    $data = array(
-      'desde' => '2022-06-07',
-      'hasta' => '2022-06-07'
-    );
-    $this->load->view('entries', array(
-      'head'    => $this->load->view('ledgerHead', array('date' => $this->sesion['ejercicio'] . date('-m-d')), true),
-      'details' => $this->load->view('ledgerDetails', $data, true)
+    //Si el ejercicio activo coincide con el año actual toma la fecha actual.
+    if ( $this->sesion['ejercicio'] == date('Y') )
+      $data = array(
+        'since' => date('Y-m-d'),
+        'until' => date('Y-m-d')
+      );
+    else
+      $data = array(
+        'since' => $this->sesion['ejercicio'] . '-01-01',
+        'until' => $this->sesion['ejercicio'] . '-12-31'
+      );
+    $this->load->view('ledger', array(
+      'head'    => $this->load->view('ledgerHead', $data, true),
+      'details' => $this->load->view('ledgerDetails', array_merge($data, array('cuentas' => false)), true)
     ));
     return;
   }

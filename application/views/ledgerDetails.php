@@ -1,10 +1,7 @@
-<!-- Lista de ejercicios contables -->
-<style>
-    .material-icons{cursor:pointer;}
-    i:hover{color:gray;}
-</style>
-<span class="card-title center-align">Libro Mayor</span>
+
 <?php
+// print_r($cuentas);
+// return;
     $this->db->join('cuentas as t2', 't2.id = t1.cuenta_id', 'left');
     $this->db->join('asientos as t3', 't3.id = t1.asiento_id', 'left');
     $asientos = $this->Jesus->dice(array(
@@ -14,11 +11,11 @@
             't3.estado' => 'T',
             't2.estado' => 'T',
             't2.imputable !=' => 'T',
-            // 't1.fecha >='  => $desde,
-            // 't1.fecha <='  => $hasta
-            't3.fecha >='  => '2021-06-15',
-            't3.fecha <='  => '2021-06-15'
+            // 't1.cuenta'         => $cuentas,
+            't3.fecha >='  => $since,
+            't3.fecha <='  => $until
         ),
+        'where_in'  => array('t1.cuenta_id' => $cuentas),
         'select'    => array(
             't2.denominacion as cuenta',
             't1.id',
@@ -33,7 +30,13 @@
         'order_by'  => array('t1.cuenta_id' => 'asc', 't3.numero' => 'asc')
     ));
     if ( $asientos->result() ) {
+        // echo $asientos->num_rows();
+        // return;
         $cuenta = "";
+        if ( $since != $until )
+            $this->table->set_caption("Libro mayor desde " . date('d/m/Y', strtotime($since)) . " hasta " . date('d/m/Y', strtotime($until)));
+        else
+            $this->table->set_caption("Libro mayor de " . date('d/m/Y', strtotime($since)));
         foreach( $asientos->result() as $asientos_ ) {
             if ( $asientos_->cuenta != $cuenta ){
                 $cuenta = $asientos_->cuenta;
@@ -74,7 +77,8 @@
                 'data' => 'Fechas'
             ),
             array(
-                'data' => 'Números de <br>Asientos'
+                // 'data' => 'Números de <br>Asientos'
+                'data' => 'Asientos'
             ),
             array(
                 'data' => 'Debe'
@@ -86,6 +90,6 @@
     } else
         $this->table->add_row(array('Sin registros'));
 
-    $this->table->set_template(array('table_open' => '<table cellspacing= "0", border="0", class= "responsive-table centered highlight">'));
+    $this->table->set_template(array('table_open' => '<table cellspacing= "0", border="0", id="libro" class= "responsive-table centered highlight">'));
     echo $this->table->generate();
 ?>
