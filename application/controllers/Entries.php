@@ -17,10 +17,10 @@ class Entries extends CI_Controller {
 
     if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
       $this->delete($endpoint);
-      echo json_encode(array(
+      /*echo json_encode(array(
         'details' => $this->load->view('entriesDetails', array('date' => $parametros['date']), true)
         // 'details'   => $this->load->view('entriesDetails', array('date' => date("Y-m-d", strtotime($datetime))), true)
-      ));
+      ));*/
       return;
     }
 
@@ -95,8 +95,24 @@ class Entries extends CI_Controller {
     return true;
   }
 
-  private function delete(){
-
+  private function delete($id){
+    $this->Jesus->dice(array(
+      'update'  => 'asientoDetalles',
+      'set'     => array('estado'   => 'D'),
+      'where'   => array('asiento_id'  => $id)
+    ));
+    
+    $this->Jesus->dice(array(
+      'update'  => 'asientos',
+      'set'     => array('estado' => 'D'),
+      'where'   => array('id' => $id)
+    ));
+    
+    echo json_encode(array(
+      'clases'		=> 'green',
+      'html'			=> 'Se elimino exitosamente ' . $id
+      // 'details'   => $this->load->view('entriesDetails', array('date' => $parametros['date']), true)
+    ));
   }
 
   private function insert($parametros) {
@@ -147,7 +163,7 @@ class Entries extends CI_Controller {
     }
     echo json_encode(array(
       'clases'		=> 'green',
-      'html'			=> 'Se agrego exitosamente ' . $contador,
+      'html'			=> 'Se agrego exitosamente',
       'details'   => $this->load->view('entriesDetails', array('date' => $parametros['date']), true)
     ));
   }

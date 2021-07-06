@@ -297,25 +297,23 @@
 
     function deleteEntrie(el, y) {
         el.parent().parent().remove();
-        // console.log(el.attr('class'));
-          $.ajax({
-            url: '<?=$_SERVER["REQUEST_URI"]?>/'+y,
+        $.ajax({
+            url: '<?=$_SERVER["REQUEST_URI"]?>',
             type: 'DELETE',
-            // data: 'value:123',
+            data: y,
             success: function(result) {
-                // alert(result)
                 console.log(result);
-                // Do something with the result
-                datas = $.parseJSON(attrib);
+                datas = $.parseJSON(result);
+                /*
                 if (datas.details)
                     $('#details').html(datas.details);
-
+                    */
                 M.toast({
-                    html:           'Se eliminó exitosamente',
+                    html:           datas.html,
                     displayLength:  2500,
                     inDuration:     1000,
                     outDuration:    1000,
-                    classes:        'green'
+                    classes:        datas.clases
                 });
             }
         });
