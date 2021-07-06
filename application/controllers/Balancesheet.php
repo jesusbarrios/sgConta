@@ -13,6 +13,22 @@ class BalanceSheet extends CI_Controller {
 
   function index( $endpoint = false ) {
 
+    // Generación de reportes
+    if ( $this->input->get() ) {
+      $parametros = $this->input->get();
+      // print_r($parametros);
+      // return;
+      echo json_encode(array(
+        'clases'		=> 'green',
+        'html'			=> 'Reporte generado',
+        'details' => $this->load->view('balanceSheetDetails', array(
+          'until'     => $parametros['until'],
+          'ejercicio' => $this->sesion['ejercicio_id']
+        ), true)
+      ));
+      return;
+    }
+
     // Registrar en la base de datos
     if ( $parametros = $this->input->post() ) {
       $this->accountsValidate( $parametros );
@@ -35,15 +51,19 @@ class BalanceSheet extends CI_Controller {
       }
     }
 
-    // Varga de la primera vista
-    $data = array(
-      // 'desde' => '2022-06-07',
-      // 'hasta' => '2022-06-07'
-      'desde' => date('Y-m-d'),
-      'hasta' => date('Y-m-d')
-    );
+    //Si el ejercicio activo coincide con el año actual toma la fecha actual.
+    if ( $this->sesion['ejercicio'] == date('Y') )
+      $data = array(
+        'ejercicio' => $this->sesion['ejercicio_id'],
+        'until'     => date('Y-m-d')
+      );
+    else
+      $data = array(
+        'ejercicio' => $this->sesion['ejercicio_id'],
+        'until'     => $this->sesion['ejercicio'] . '-12-31'
+      );
     $this->load->view('balanceSheet', array(
-      'head'    => $this->load->view('balanceSheetHead', array('date' => $this->sesion['ejercicio'] . date('-m-d')), true),
+      'head'    => $this->load->view('balanceSheetHead', $data, true),
       'details' => $this->load->view('balanceSheetDetails', $data, true)
     ));
     return;
