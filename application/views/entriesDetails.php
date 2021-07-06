@@ -31,8 +31,8 @@
                 ),
                 $asientos_->cuentas,
                 $asientos_->totalDebe,
-                "<i class='material-icons edit' name='edit' value=$asientos_->id>edit</i>
-                <i class='material-icons delete' href='#modal1' name='delete' value=$asientos_->id>delete</i>"
+                // "<i class='material-icons edit' name='edit' value=$asientos_->id>edit</i>
+                "<i class='material-icons delete' href='#modal1' name='delete' value=$asientos_->id onclick='deleteEntrie($(this), $asientos_->id);return false;'>delete</i>"
             ));
         }
         $this->table->set_heading(array(
@@ -48,3 +48,9 @@
     $this->table->set_template(array('table_open' => '<table cellspacing= "0", border="0", class= "responsive-table centered highlight">'));
     echo $this->table->generate();
 ?>
+
+<script>
+
+    
+
+</script>
