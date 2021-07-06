@@ -12,6 +12,18 @@ class Entries extends CI_Controller {
 
   function index( $endpoint = false ) {
 
+    // echo 'hola mundo';
+    // return;
+
+    if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+      $this->delete($endpoint);
+      echo json_encode(array(
+        'details' => $this->load->view('entriesDetails', array('date' => $parametros['date']), true)
+        // 'details'   => $this->load->view('entriesDetails', array('date' => date("Y-m-d", strtotime($datetime))), true)
+      ));
+      return;
+    }
+
     // Registrar en la base de datos
     if ( $parametros = $this->input->post() ) {
       $this->accountsValidate( $parametros );
@@ -81,6 +93,10 @@ class Entries extends CI_Controller {
       }
     }
     return true;
+  }
+
+  private function delete(){
+
   }
 
   private function insert($parametros) {

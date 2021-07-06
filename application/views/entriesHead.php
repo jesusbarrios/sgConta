@@ -41,22 +41,38 @@
                     <!-- Cuenta -->
                     <div class="row row-1">
                         <div class="col m6 input-field">
-                            <input type="text" size="70" id="autocomplete-input" name="account[1]" class="autocomplete validate" required>
+                            <input type="text" size="70" id="autocomplete-input" name="account[1]" class="autocomplete validate" required />
                         </div>
                         <div class="col m2 input-field">
-                            <input type="number" min="0" name="debe[1]" class="debe validate right-align" value=""  onkeyup="compare(this, 1);return false;" required>
+                            <input type="number" min="0" name="debe[1]" class="debe validate right-align" value=""  onkeyup="compare(this, 1);return false;" required />
                         </div>
                         <div class="col m2 input-field">
-                            <input type="number" min="0" name="haber[1]" class="haber validate right-align" value="" onkeyup="compare(this, 1);return false;" required>
+                            <input type="number" min="0" name="haber[1]" class="haber validate right-align" value="" onkeyup="compare(this, 1);return false;" required />
                         </div>
-                        <div class="col m2 input-field center">
+                        <!-- <div class="col m2 input-field center">
                             <a href="#" onclick="removeRow(this);return false;" title="Eliminar fila" class="btn-floating material-icons" value="2"><i class="material-icons">remove</i></a>
-                        </div>
+                        </div> -->
                     </div>
+                    <!-- Cuenta -->
+                    <div class="row row-1">
+                        <div class="col m6 input-field">
+                            <input type="text" size="70" id="autocomplete-input" name="account[2]" class="autocomplete validate" required>
+                        </div>
+                        <div class="col m2 input-field">
+                            <input type="number" min="0" name="debe[2]" class="debe validate right-align" value=""  onkeyup="compare(this, 2);return false;" required>
+                        </div>
+                        <div class="col m2 input-field">
+                            <input type="number" min="0" name="haber[2]" class="haber validate right-align" value="" onkeyup="compare(this, 2);return false;" required>
+                        </div>
+                        <!-- <div class="col m2 input-field center">
+                            <a href="#" onclick="removeRow(this);return false;" title="Eliminar fila" class="btn-floating material-icons" value="3"><i class="material-icons">remove</i></a>
+                        </div> -->
+                    </div>
+
                 </div>
                 <div class="row row-1">
                     <div class="col offset-m10 m2 input-field center">
-                        <a href="#" onclick="addRow(2);return false;" title="Agregar fila" class="btn-floating material-icons" value="2"><i class="material-icons addRow">add</i></a>
+                        <a href="#" onclick="addRow(3);return false;" title="Agregar fila" class="btn-floating material-icons" value="3"><i class="material-icons addRow">add</i></a>
                     </div>
                 </div>
                 <div class="row">
@@ -74,9 +90,13 @@
 
                 <div class="row">
                     <div class="col s6 right">
-                        <button class="btn waves-light red" type="submit">
+                        <button class="btn waves-light red btnSave" type="submit">
                             <i class="material-icons left">save</i>
                             Guardar
+                        </button>
+                        <button class="btn waves-light red btnNew green" onclick="refreshForm();return false;">
+                            <i class="material-icons left">refresh</i>
+                            Nuevo
                         </button>
                     </div>
                 </div>
@@ -86,40 +106,33 @@
 </form>
 
 <script>
-    $(document).ready(function(){
-        /*$(".debe").on({
-    "focus": function (event) {
-        $(event.target).select();
-    },
-    "keyup": function (event) {
-        $(event.target).val(function (index, value ) {
-            // alert();
-            return value.replace(/\D/g, "")
-                        .replace(/([0-9])([0-9]{2})$/, '$1.$2')
-                        .replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ".");
-        });
+
+    function refreshForm() {
+        // $('.btnSave').show().prop('disabled', 'false');
+        $('.btnSave').removeAttr('disabled');
+        // $('.btnNew').hide();
+        $('#descripcion, input[type="text"], input[type="number"]').prop('value', '');
+        $('.totalDebe, .totalHaber').removeClass("red lighten-3");
+
+        var elements = document.querySelectorAll('.attached');  
+        for (var element of elements)
+            element.remove();
+
+        $('#descripcion').focus();
+        console.log('hola mundo');
     }
-});*/
-        /*
-        $(".debe").on('input', function (event) {
-            alert()
-            $(event.target).val(function (index, value ) {
-                // return value.replace(/[^0-9]/g,'');//Ambas formas funcionan muy bien
-                return value.replace(/\D/g, ".");
-            });
-        });*/
-        //Separador de miles
-	/*$(".debe").on('input', function (event) {
-	       $(event.target).val(function (index, value ) {
-	            return value.replace(/\D/g, "")
-                        // .replace(/([0-9])([0-9]{3})$/, '$1.$2')//Separa centavos
-                        .replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ".");//Separa miles
-	        });
-	    }
-	);*/
+    $(document).ready(function(){
         xOp = 1;
         $("#frm").submit(function(e)    {
             e.preventDefault()
+            console.log('guardar');
+            // $('.btnSave').hide().prop('disabled', 'true');
+            $('.btnSave').prop('disabled', 'true');
+            // $('.btnNew').show().focus();
+            $('.btnNew').focus();
+            // return;
+           
+           
             if ( compare() ) {
                 $('.totalDebe').prop('disabled', false);
                 $('.totalHaber').prop('disabled', false);
@@ -223,10 +236,10 @@
         
         // APPEND to document
         var acc4 = document.createElement("div");
-        acc4.setAttribute("class", "row row-" + xOp);
+        acc4.setAttribute("class", "attached row row-" + xOp);
         acc4.append(ac2, de2, ha2, acc3);
         $(".toAdd").append(acc4);
-        
+
         // Update account options
         $.get('<?=$_SERVER["REQUEST_URI"]?>/accounts', $("#frm").serialize(), function (attrib) {
             $('input.autocomplete').autocomplete({
@@ -272,13 +285,39 @@
         // compare();
 
         if ( $('.totalDebe').val() != $('.totalHaber').val() ){
-            $('.totalDebe').addClass("red lighten-3");
-            $('.totalHaber').addClass("red lighten-3");
+            $('.totalDebe, .totalHaber').addClass("red lighten-3");
+            // $('.totalHaber').addClass("red lighten-3");
             return false;
         }else {
-            $('.totalDebe').removeClass("red lighten-3");
-            $('.totalHaber').removeClass("red lighten-3");
+            $('.totalDebe, .totalHaber').removeClass("red lighten-3");
+            // $('').removeClass("red lighten-3");
             return true;
         }
+    }
+
+    function deleteEntrie(el, y) {
+        el.parent().parent().remove();
+        // console.log(el.attr('class'));
+          $.ajax({
+            url: '<?=$_SERVER["REQUEST_URI"]?>/'+y,
+            type: 'DELETE',
+            // data: 'value:123',
+            success: function(result) {
+                // alert(result)
+                console.log(result);
+                // Do something with the result
+                datas = $.parseJSON(attrib);
+                if (datas.details)
+                    $('#details').html(datas.details);
+
+                M.toast({
+                    html:           'Se eliminó exitosamente',
+                    displayLength:  2500,
+                    inDuration:     1000,
+                    outDuration:    1000,
+                    classes:        'green'
+                });
+            }
+        });
     }
 </script>
