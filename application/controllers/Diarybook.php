@@ -12,6 +12,24 @@ class Diarybook extends CI_Controller {
 	}
 
   function index( $endpoint = false ) {
+    if ( $this->input->get() ) {
+      $parametros = $this->input->get();
+      if ( $parametros['since'] > $parametros['until'])
+        echo json_encode(array(
+          'clases'		=> 'red',
+          'html'			=> 'Fechas incoherentes'
+        ));
+      else
+        echo json_encode(array(
+          'clases'		=> 'green',
+          'html'			=> 'Reporte generado',
+          'details' => $this->load->view('diarybookDetails', array(
+            'since' => $parametros['since'],
+            'until' => $parametros['until']
+          ), true)
+        ));
+      return;
+    }
     // Registrar en la base de datos
     // echo $endpoint;
     // return;
@@ -26,8 +44,8 @@ class Diarybook extends CI_Controller {
       $parametros = $this->input->get();
       if ( $endpoint == 'report' ) {
         $data = array(
-          'desde' => $parametros['since'],
-          'hasta' => $parametros['until']
+          'since' => $parametros['since'],
+          'until' => $parametros['until']
         );
         echo json_encode(array(
           'details' => $this->load->view('diarybookDetails', $data, true)
@@ -45,13 +63,13 @@ class Diarybook extends CI_Controller {
     //Si el ejercicio activo coincide con el año actual toma la fecha actual.
     if ( $this->sesion['ejercicio'] == date('Y') )
       $data = array(
-        'desde' => date('Y-m-d'),
-        'hasta' => date('Y-m-d')
+        'since' => date('Y-m-d'),
+        'until' => date('Y-m-d')
       );
     else
       $data = array(
-        'desde' => $this->sesion['ejercicio'] . '-01-01',
-        'hasta' => $this->sesion['ejercicio'] . '-12-31'
+        'since' => $this->sesion['ejercicio'] . '-01-01',
+        'until' => $this->sesion['ejercicio'] . '-12-31'
       );
 
     $this->load->view('container', array(

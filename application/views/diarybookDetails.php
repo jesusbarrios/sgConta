@@ -2,13 +2,14 @@
     .material-icons{cursor:pointer;}
     i:hover{color:gray;}
 </style>
+
 <?php
     $asientos = $this->Jesus->dice(array(
         'get'   => 'asientos as t1',
         'where' => array(
             't1.estado' => 'T',
-            't1.fecha >='  => $desde,
-            't1.fecha <='  => $hasta
+            't1.fecha >='  => $since,
+            't1.fecha <='  => $until
         ),
         'select'    => array(
             't1.id',
@@ -20,10 +21,14 @@
             '(SELECT COUNT(t2.id) FROM asientoDetalles as t2 WHERE t2.asiento_id = t1.id) as cuentas',
             'DATE_FORMAT(t1.fecha,	"%W %d/%c/%Y") as fecha',
         ),
-        'order_by'  => array('t1.numero' => 'asc')
+        'order_by'  => array('t1.fecha' => 'asc', 't1.numero' => 'asc')
     ));
     if ( $asientos->result() ) {
-        $this->table->set_caption("Libro diario desde " . date('d/m/Y', strtotime($desde)) . " hasta " . date('d/m/Y', strtotime($hasta)));
+        // echo 'hola mundo';
+        if ( $since != $until )
+            $this->table->set_caption("Libro diario desde " . date('d/m/Y', strtotime($since)) . " hasta " . date('d/m/Y', strtotime($until)));
+        else
+            $this->table->set_caption("Libro diario de " . date('d/m/Y', strtotime($since)));
         $asiento_descripcion = "";
         foreach( $asientos->result() as $asientos_ ) {
 

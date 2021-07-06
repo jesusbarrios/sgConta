@@ -15,11 +15,11 @@
 <form actions="" id="frm" name="frm" action="" method=''>
     <div class="row">
         <div class="col input-field s4">
-            <input type="date" id="date" name="since" min="<?=$this->sesion['ejercicio']?>-01-01" value="<?=$desde?>" max="<?=$this->sesion['ejercicio']?>-12-31" class="validate center" required autofocus>
+            <input type="date" id="date" name="since" min="<?=$this->sesion['ejercicio']?>-01-01" value="<?=$since?>" max="<?=$this->sesion['ejercicio']?>-12-31" class="validate center" required autofocus>
             <label for="date">Desde</label>
         </div>
         <div class="col input-field s4">
-            <input type="date" id="date" name="until" min="<?=$this->sesion['ejercicio']?>-01-01" value="<?=$hasta?>" max="<?=$this->sesion['ejercicio']?>-12-31" class="validate center" required autofocus>
+            <input type="date" id="date" name="until" min="<?=$this->sesion['ejercicio']?>-01-01" value="<?=$until?>" max="<?=$this->sesion['ejercicio']?>-12-31" class="validate center" required autofocus>
             <label for="date">Hasta</label>
         </div>
     </div>
@@ -51,27 +51,23 @@
         // return;
         return false;
     }
-        function generateReport() {
-            $.get('<?=$_SERVER["REQUEST_URI"]?>/report', $('form').serialize(), function (attrib) {
-                // $('#details').html(attrib);
-                datas = $.parseJSON(attrib);
-                // console.log(datas.details);
+    function generateReport() {
+        
+        $.get('<?=$_SERVER["REQUEST_URI"]?>', $('form').serialize(), function (attrib) {
+            console.log(attrib);
+            
+            datas = $.parseJSON(attrib);
+            if (datas.details)
                 $('#details').html(datas.details);
-                // console.log(attrib);
-
-                /*datas = $.parseJSON(attrib);
-                M.toast({
-                    html:           datas.html,
-                    displayLength:  2500,
-                    inDuration:     1000,
-                    outDuration:    1000,
-                    classes:        datas.clases
-                });
-                if (datas.details)
-                    $('#details').html(datas.details);
-                */
+            M.toast({
+                html:           datas.html,
+                displayLength:  2500,
+                inDuration:     1000,
+                outDuration:    1000,
+                classes:        datas.clases
             });
-        }
+        });
+    }
     $(document).ready(function(){
         // xOp = 1;
         $('form').submit(function(e)    {
