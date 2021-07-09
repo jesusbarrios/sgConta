@@ -25,12 +25,13 @@
                         <i class="material-icons right">arrow_drop_down</i>
                     </a>
                 </li>
-                <li>
+                <!-- <li>
                     <a href="#" class="dropdown-trigger" data-target="user_drop">
                         Usuario
                         <i class="material-icons right">arrow_drop_down</i>
                     </a>
-                </li>
+                </li> -->
+                <li><a href="logout">Salir</a></li>
             </ul>
         </div>
     </nav>
@@ -38,19 +39,19 @@
 
 <ul class="sidenav" id="menu-responsive">
     <li><a href="/">Inicio</a></li>
-    <li><a href="/exercises">  Ejecrcicios</a></li>
-    <li><a href="/accounts">   Cuentas</a></li>
-    <li><a href="entries">     Asientos</a></li>
+    <li><a href="/exercises">       Ejecrcicios</a></li>
+    <li><a href="/accounts">        Cuentas</a></li>
+    <li><a href="entries">          Asientos</a></li>
     <li class="divider"></li>
-    <li><a href="diarybook">    Libro diario</a></li>
-    <li><a href="ledger">       Libro mayor</a></li>
+    <li><a href="diarybook">        Libro diario</a></li>
+    <li><a href="ledger">           Libro mayor</a></li>
     <li class="divider"></li>
-    <li><a href="balancesheet">    Balance general</a></li>
-    <li><a href="result">  Balance de resultados</a></li>
+    <li><a href="balancesheet">     Balance general</a></li>
+    <li><a href="result">           Balance de resultados</a></li>
     <li class="divider"></li>
-    <li><a href="informatios">  Datos personales</a></li>
-    <li><a href="password">     Contraseña</a></li>
-    <li><a href="logout">       Salir</a></li>
+    <!-- <li><a href="informatios">      Datos personales</a></li> -->
+    <!-- <li><a href="password">         Contraseña</a></li> -->
+    <li><a href="logout">           Salir</a></li>
 </ul>
 
 <ul id="book_drop" class="dropdown-content">
