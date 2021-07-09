@@ -38,8 +38,40 @@
     </div>
     <?php $this->load->view('footer') ?>
     <!--Import jQuery before materialize.js-->
-    
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <!-- <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script> -->
+    <!-- <script type="text/javascript" src="js/saveAsExcel.js"></script> -->
+    <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script> -->
+    <script src="//cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+
+    <script type="text/javaScript">
+        function exportarExcel(){
+            $("#libroMayor").table2excel({
+                exclude: ".noExl",
+                name: "Worksheet Name",
+                filename: "libroMayor", // do include extension
+                fileext:'.xls',
+                preserveColors: false // set to true if you want background colors and font colors preserved
+            });
+        }
+        function generateReport() {
+            $.get('<?=$_SERVER["REQUEST_URI"]?>', $('form').serialize(), function (attrib) {
+                console.log(attrib);
+                datas = $.parseJSON(attrib);
+                if (datas.details)
+                    $('#details').html(datas.details);
+                if (datas.html)
+                    M.toast({
+                        html:           datas.html,
+                        displayLength:  2500,
+                        inDuration:     1000,
+                        outDuration:    1000,
+                        classes:        datas.clases
+                    });
+            });
+        }
+    </script>
 </body>
 </html>
