@@ -61,7 +61,31 @@
     $(document).ready(function(){
         // Delete
         $(".delete").click(function(e)  {
-            if( confirm('Confirmar eliminación') );
+            // console.log($(this).attr('value'));
+            if( confirm('Confirmar eliminación') ) {
+                id = $(this).attr('value');
+                $.post('<?=$_SERVER["REQUEST_URI"]?>',  $("form").serialize() + "&action=delete&value=" + id, function (attrib) {
+                    console.log(attrib)
+                    $(this).parent().parent().remove();
+                     datas = $.parseJSON(attrib);
+                    M.toast({
+                        html: datas.html,
+                        displayLength: 2500,
+                        inDuration: 1000,
+                        outDuration:1000,
+                        classes: datas.clases
+                    });
+                    if (datas.details)
+                        $('#details').html(datas.details);
+                    /*if (datas.head){
+                        $('#head').html(datas.head);
+                        $('#denominacion').focus()
+                        temp = $('#denominacion').val();
+                        $('#denominacion').val('');
+                        $('#denominacion').val(temp)
+                    }*/
+                });
+            }
                 // request($(this))
             return true;
         })

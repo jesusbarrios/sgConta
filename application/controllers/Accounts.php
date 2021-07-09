@@ -11,6 +11,7 @@ class Accounts extends CI_Controller {
 	}
 
   function index() {
+  
     // Empresa
     if ($company_ = $this->Jesus->dice(array(
       'get'       => 'empresas as t1',
@@ -24,9 +25,9 @@ class Accounts extends CI_Controller {
       'min' => $min,
       'max' => date('Y') + 1
     );
-    // print_r($this->input->post());
-    // return;
+
     if ( $this->input->post() ) {
+
       if ( $this->input->post('action') == 'add' || $this->input->post('action') == 'save' )
         $this->save();
       else if ( $this->input->post('action') == 'delete' )
@@ -73,7 +74,9 @@ class Accounts extends CI_Controller {
     }
   }
 
-  private function delete() {
+  function delete() {
+    // echo 'en delete';
+    // return;
     $this->Jesus->dice(array(
       'update'  => 'cuentas',
       'set'     => array('estado' => 'D'),
