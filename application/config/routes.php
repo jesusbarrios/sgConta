@@ -58,6 +58,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	$route['diarybook']				= "diarybook";
 	$route['diarybook/(:any)']		= "diarybook/index/$1";
 	$route['balancesheet']			= "balancesheet";
+	$route['result']				= "result";
 	$route['ledger']				= "ledger";
 	
 	$route['entries']				= "entries";
