@@ -39,7 +39,8 @@
     </div>
     <?php $this->load->view('footer') ?>
     <!--Import jQuery before materialize.js-->
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <!-- <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script> -->
     <!-- <script type="text/javascript" src="js/saveAsExcel.js"></script> -->
@@ -49,9 +50,10 @@
     <script type="text/javaScript">
         function exportarExcel(){
             $("#balance").table2excel({
-                exclude: ".excludeThisClass",
+                exclude: ".noExl",
                 name: "Worksheet Name",
-                filename: "balance.xls", // do include extension
+                filename: "balanceResultado", // do include extension
+                fileext:'.xls',
                 preserveColors: false // set to true if you want background colors and font colors preserved
             });
         }
