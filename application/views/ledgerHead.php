@@ -62,11 +62,13 @@
         </div>
     </div>
     <div class="row">
-        <div class="col s12">
-            <button class="btn red waves-light" type="submit" name="btnReport" id='btnReport' onclick="generateReport();return false;">
+    <div class="col s12">
+            <button class="btn red waves-light" type="button" name="btnReport" id='btnReport' onclick="generateReport();return false;">
+                <!-- <i class="material-icons left">save</i> -->
                 Generar libro
             </button>
-            <button class="btn red waves-light" type="button" onclick="saveAsExcel('libro', 'libroMayor.xls');">
+            <button class="btn red waves-light" type="button" onclick="exportarExcel();">
+                <!-- <i class="material-icons left">save</i> -->
                 Exportar
             </button>
         </div>

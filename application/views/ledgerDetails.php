@@ -1,7 +1,31 @@
 
 <?php
-// print_r($cuentas);
-// return;
+    $this->table->add_row(array(
+        'data'  => '<h5>Libro Mayor</h5>',
+        'colspan'   => '3',
+        'style'     => 'text-align:center; display:none;'
+    ));
+    $this->table->add_row(array(
+        'data'  => '<b>Razon social:</b> Fiuni Informática',
+        'colspan'   => '100%',
+        'style'     => 'text-align:left; display:none;'
+    ));
+    $this->table->add_row(array(
+        'data'  => '<b>RUC:</b> 80059425-2',
+        'colspan'   => '100%',
+        'style'     => 'text-align:left; display:none;'
+    ));
+    $this->table->add_row(array(
+        'data'  => "<b>Ejercicio fiscal:</b> $ejercicio",
+        'colspan'   => '100%',
+        'style'     => 'text-align:left; display:none;'
+    ));
+    $this->table->add_row(array(
+        'data'  => "<b>Periodo del libro mayor:</b> " . date('d/m/Y', strtotime($since)) . " al " . date('d/m/Y', strtotime($until)),
+        'colspan'   => '100%',
+        'style'     => 'text-align:left'
+    ));
+
     $this->db->join('cuentas as t2', 't2.id = t1.cuenta_id', 'left');
     $this->db->join('asientos as t3', 't3.id = t1.asiento_id', 'left');
     $asientos = $this->Jesus->dice(array(
@@ -30,15 +54,47 @@
         'order_by'  => array('t1.cuenta_id' => 'asc', 't3.numero' => 'asc')
     ));
     if ( $asientos->result() ) {
+        $this->table->add_row(array(
+            array(
+                'data' => 'Fechas',
+                'style' => 'text-align:center; font-weight:bold;'
+            ),
+            array(
+                // 'data' => 'Números de <br>Asientos'
+                'data' => 'Asientos',
+                'style' => 'text-align:center; font-weight:bold;'
+            ),
+            array(
+                'data' => 'Debe',
+                'style' => 'text-align:center; font-weight:bold;'
+            ),
+            array(
+                'data' => 'Haber',
+                'style' => 'text-align:center; font-weight:bold;'
+            )
+        ));
         // echo $asientos->num_rows();
         // return;
-        $cuenta = "";
-        if ( $since != $until )
-            $this->table->set_caption("Libro mayor desde " . date('d/m/Y', strtotime($since)) . " hasta " . date('d/m/Y', strtotime($until)));
-        else
-            $this->table->set_caption("Libro mayor de " . date('d/m/Y', strtotime($since)));
+        $cuenta = false;
+        $debe = $haber = 0;
         foreach( $asientos->result() as $asientos_ ) {
             if ( $asientos_->cuenta != $cuenta ){
+                if ( $cuenta )
+                    $this->table->add_row(
+                        false,
+                        array(
+                            'data'      => 'Total',
+                            'style'     => 'text-align:right; font-weight:bold;'
+                        ),
+                        array(
+                            'data'      => number_format($debe, 0, ',', '.'),
+                            'style'     => 'text-align:right; font-weight:bold;'
+                        ),
+                        array(
+                            'data'      => number_format($haber, 0, ',', '.'),
+                            'style'     => 'text-align:right; font-weight:bold;'
+                        )
+                    );
                 $cuenta = $asientos_->cuenta;
                 $this->table->add_row(array(
                     array(
@@ -48,7 +104,10 @@
                         'colspan'   => '100%',
                     )
                 ));
+                $debe = $haber = 0;
             }
+            $debe += (int) str_replace('.', '', $asientos_->debe);
+            $haber += (int) str_replace('.', '', $asientos_->haber);
             $this->table->add_row(array(
                 array(
                     'data' => $asientos_->fecha,
@@ -62,34 +121,34 @@
                 ),
                 array(
                     'data' => $asientos_->debe,
-                    'style' => 'text-align:center;',
+                    'style' => 'text-align:right;',
                     'colspan'   => '1'
                 ),
                 array(
                     'data' => $asientos_->haber,
-                    'style' => 'text-align:center;',
+                    'style' => 'text-align:right;',
                     'colspan'   => '1'
                 ),
             ));
         }
-        $this->table->set_heading(array(
+        $this->table->add_row(
+            false,
             array(
-                'data' => 'Fechas'
+                'data'      => 'Total',
+                'style'     => 'text-align:right; font-weight:bold;'
             ),
             array(
-                // 'data' => 'Números de <br>Asientos'
-                'data' => 'Asientos'
+                'data'      => number_format($debe, 0, ',', '.'),
+                'style'     => 'text-align:right; font-weight:bold;'
             ),
             array(
-                'data' => 'Debe'
-            ),
-            array(
-                'data' => 'Haber'
+                'data'      => number_format($haber, 0, ',', '.'),
+                'style'     => 'text-align:right; font-weight:bold;'
             )
-        ));
+        );
     } else
         $this->table->add_row(array('Sin registros'));
 
-    $this->table->set_template(array('table_open' => '<table cellspacing= "0", border="0", id="libro" class= "responsive-table centered highlight">'));
+    $this->table->set_template(array('table_open' => '<table cellspacing= "0", border="0", id="libroMayor" class= "responsive-table centered highlight">'));
     echo $this->table->generate();
 ?>
