@@ -73,17 +73,27 @@
         foreach( $cuentas->result() as $cuentas_ ) {
             $key = substr($cuentas_->codigo, 0, 2);
             if ( !array_key_exists($key, $debe) ) {
-                $debe[$key] = 0;
-                $haber[$key] = 0;
+                $debe[strval($key)] = 0;
+                $haber[strval($key)] = 0;
             }
-            $debe[$key]     += $cuentas_->debe;
-            $haber[$key]    += $cuentas_->haber;
+            $debe[strval($key)]     += $cuentas_->debe;
+            $haber[strval($key)]    += $cuentas_->haber;
+        }
+
+        $activoDebe = $activoHaber = $pasivoDebe = $pasivoHaber = 0;
+        if ( array_key_exists('01', $debe) ) {
+            $activoDebe = $debe['01'];
+            $activoHaber = $haber['01'];
+        }
+        if ( array_key_exists('02', $debe) ) {
+            $pasivoDebe  = $debe['02'];
+            $pasivoHaber = $haber['02'];
         }
 
         $this->table->add_row(array(
-            number_format($debe['01'] - $haber['01'], 0, ',', '.'),
-            number_format($haber['02'] - $debe['02'], 0, ',', '.'),
-            number_format(($debe['01'] - $haber['01']) - ($haber['02'] - $debe['02']), 0, ',', '.')
+            number_format($activoDebe - $activoHaber, 0, ',', '.'),
+            number_format($pasivoHaber - $pasivoDebe, 0, ',', '.'),
+            number_format(($activoDebe - $activoHaber) - ($pasivoHaber - $pasivoDebe), 0, ',', '.')
         ));
 
         $this->table->add_row(array('data' => 'hola', 'style' => 'display:none'));
