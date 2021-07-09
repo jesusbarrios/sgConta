@@ -48,9 +48,3 @@
     $this->table->set_template(array('table_open' => '<table cellspacing= "0", border="0", class= "responsive-table centered highlight">'));
     echo $this->table->generate();
 ?>
-
-<script>
-
-    
-
-</script>

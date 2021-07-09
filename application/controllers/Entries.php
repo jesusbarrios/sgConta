@@ -12,15 +12,8 @@ class Entries extends CI_Controller {
 
   function index( $endpoint = false ) {
 
-    // echo 'hola mundo';
-    // return;
-
     if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
       $this->delete($endpoint);
-      /*echo json_encode(array(
-        'details' => $this->load->view('entriesDetails', array('date' => $parametros['date']), true)
-        // 'details'   => $this->load->view('entriesDetails', array('date' => date("Y-m-d", strtotime($datetime))), true)
-      ));*/
       return;
     }
 
@@ -40,7 +33,6 @@ class Entries extends CI_Controller {
         $parametros = $this->input->get();
         echo json_encode(array(
           'details' => $this->load->view('entriesDetails', array('date' => $parametros['date']), true)
-          // 'details'   => $this->load->view('entriesDetails', array('date' => date("Y-m-d", strtotime($datetime))), true)
         ));
         return;
       }
@@ -96,6 +88,11 @@ class Entries extends CI_Controller {
   }
 
   private function delete($id){
+    if (!$id)
+      echo json_encode(array(
+        'clases'		=> 'red',
+        'html'			=> 'Falta definir la cuenta '
+      ));
     $this->Jesus->dice(array(
       'update'  => 'asientoDetalles',
       'set'     => array('estado'   => 'D'),
@@ -110,8 +107,7 @@ class Entries extends CI_Controller {
     
     echo json_encode(array(
       'clases'		=> 'green',
-      'html'			=> 'Se elimino exitosamente ' . $id
-      // 'details'   => $this->load->view('entriesDetails', array('date' => $parametros['date']), true)
+      'html'			=> 'Se elimino exitosamente '
     ));
   }
 
@@ -155,8 +151,8 @@ class Entries extends CI_Controller {
       $this->Jesus->dice(array('insert' => array('asientoDetalles' => array(
         'asiento_id'  => $entrie_id,
         'cuenta_id'   => $account_['id'],
-        'debe'        => isset($parametros['debe'][$key])?  $parametros['debe'][$key]   : NULL,
-        'haber'       => isset($parametros['haber'][$key])? $parametros['haber'][$key]  : NULL,
+        'debe'        => isset($parametros['debe'][$key])?  str_replace('.', '', $parametros['debe'][$key])   : NULL,
+        'haber'       => isset($parametros['haber'][$key])? str_replace('.', '', $parametros['haber'][$key])  : NULL,
         'estado'      => 'T'
       ))));
       
