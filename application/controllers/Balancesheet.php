@@ -12,18 +12,16 @@ class BalanceSheet extends CI_Controller {
 	}
 
   function index( $endpoint = false ) {
-
     // Generación de reportes
     if ( $this->input->get() ) {
       $parametros = $this->input->get();
-      // print_r($parametros);
-      // return;
       echo json_encode(array(
         'clases'		=> 'green',
         'html'			=> 'Reporte generado',
         'details' => $this->load->view('balanceSheetDetails', array(
-          'until'     => $parametros['until'],
-          'ejercicio' => $this->sesion['ejercicio_id']
+          'until'         => $parametros['until'],
+          'ejercicio_id'  => $this->sesion['ejercicio_id'],
+          'ejercicio'     => $this->sesion['ejercicio']
         ), true)
       ));
       return;
@@ -54,13 +52,15 @@ class BalanceSheet extends CI_Controller {
     //Si el ejercicio activo coincide con el año actual toma la fecha actual.
     if ( $this->sesion['ejercicio'] == date('Y') )
       $data = array(
-        'ejercicio' => $this->sesion['ejercicio_id'],
-        'until'     => date('Y-m-d')
+        'until'     => date('Y-m-d'),
+        'ejercicio_id'  => $this->sesion['ejercicio_id'],
+        'ejercicio'     => $this->sesion['ejercicio']
       );
     else
       $data = array(
-        'ejercicio' => $this->sesion['ejercicio_id'],
-        'until'     => $this->sesion['ejercicio'] . '-12-31'
+        'until'         => $this->sesion['ejercicio'] . '-12-31',
+        'ejercicio_id'  => $this->sesion['ejercicio_id'],
+        'ejercicio'     => $this->sesion['ejercicio']
       );
     $this->load->view('balanceSheet', array(
       'head'    => $this->load->view('balanceSheetHead', $data, true),
