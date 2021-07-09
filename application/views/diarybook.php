@@ -23,7 +23,7 @@
             <div class="col s12 m12">
                 <div class="card hoverable">
                     <div class="card-content">
-                        <span class="card-title center-align">Balance de Resultado</span>
+                        <span class="card-title center-align">Libro diario</span>
                         <!-- Cabecera -->
                         <div id="head">
                             <?= $head ?>
@@ -49,7 +49,7 @@
 
     <script type="text/javaScript">
         function exportarExcel(){
-            $("#balance").table2excel({
+            $("#libroDiario").table2excel({
                 exclude: ".noExl",
                 name: "Worksheet Name",
                 filename: "balanceResultado", // do include extension

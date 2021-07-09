@@ -52,7 +52,7 @@ class Diarybook extends CI_Controller {
         'ejercicio'     => $this->sesion['ejercicio']
       );
 
-    $this->load->view('container', array(
+    $this->load->view('diarybook', array(
       'titulo'  => 'Libro diario',
       'head'    => $this->load->view('diarybookHead', $data, true),
       'details' => $this->load->view('diarybookDetails', $data, true)

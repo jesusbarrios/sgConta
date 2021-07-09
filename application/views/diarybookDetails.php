@@ -5,7 +5,7 @@
 
 <?php
     $this->table->add_row(array(
-        'data'  => '<h5>Balance de resultado</h5>',
+        'data'  => '<h5>Libro diario</h5>',
         'colspan'   => '3',
         'style'     => 'text-align:center; display:none;'
     ));
