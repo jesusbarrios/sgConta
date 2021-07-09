@@ -26,7 +26,7 @@
                 $ejercicios_->activo?
                     "<i class='material-icons green-text'>check</i>"
                     : "<i class='material-icons gray-text'>remove</i>",
-                '0',
+                // '0',
                 "<i class='material-icons edit' name='edit' value=$ejercicios_->id>edit</i>
                 <i class='material-icons delete' href='#modal1' name='delete' value=$ejercicios_->id>delete</i>",
 /*
@@ -40,7 +40,7 @@
             'Años',
             'Denominaciones',
             'Activo',
-            'Asientos',
+            // 'Asientos',
             array('data' => 'Operaciones', 'colspan' => '2')
         ));
         $this->table->set_template(array('table_open' => '<table cellspacing= "0", border="0", class= "responsive-table centered highlight">'));
