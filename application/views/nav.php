@@ -46,7 +46,7 @@
     <li><a href="ledger">       Libro mayor</a></li>
     <li class="divider"></li>
     <li><a href="balancesheet">    Balance general</a></li>
-    <li><a href="resultsbalance">  Balance de resultados</a></li>
+    <li><a href="result">  Balance de resultados</a></li>
     <li class="divider"></li>
     <li><a href="informatios">  Datos personales</a></li>
     <li><a href="password">     Contraseña</a></li>
@@ -63,7 +63,7 @@
 <ul id="balance_drop" class="dropdown-content">
     <li><a href="balancesheet">     General</a></li>
     <li class="divider"></li>
-    <li><a href="resultsbalance">   Resultados</a></li>
+    <li><a href="result">   Resultados</a></li>
     <li class="divider"></li>
 </ul>
 
