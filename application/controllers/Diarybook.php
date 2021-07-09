@@ -12,7 +12,11 @@ class Diarybook extends CI_Controller {
 	}
 
   function index( $endpoint = false ) {
+    
+
     if ( $this->input->get() ) {
+      // echo 'hola mundo';
+    // return;
       $parametros = $this->input->get();
       if ( $parametros['since'] > $parametros['until'])
         echo json_encode(array(
@@ -24,55 +28,31 @@ class Diarybook extends CI_Controller {
           'clases'		=> 'green',
           'html'			=> 'Reporte generado',
           'details' => $this->load->view('diarybookDetails', array(
-            'since' => $parametros['since'],
-            'until' => $parametros['until']
+            'since'         => $parametros['since'],
+            'until'         => $parametros['until'],
+            'ejercicio_id'  => $this->sesion['ejercicio_id'],
+            'ejercicio'     => $this->sesion['ejercicio']
           ), true)
         ));
       return;
     }
-    // Registrar en la base de datos
-    // echo $endpoint;
-    // return;
-    if ( $parametros = $this->input->post() ) {
-      $this->accountsValidate( $parametros );
-      $this->insert($parametros);
-      return;
-    }
-
-    // Consulta de datos
-    if ( $this->input->get() ) {
-      $parametros = $this->input->get();
-      if ( $endpoint == 'report' ) {
-        $data = array(
-          'since' => $parametros['since'],
-          'until' => $parametros['until']
-        );
-        echo json_encode(array(
-          'details' => $this->load->view('diarybookDetails', $data, true)
-        ));
-        return;
-      } else if ( $endpoint == 'details' ) {
-        $parametros = $this->input->get();
-        echo json_encode(array(
-          'details' => $this->load->view('diarybookDetails', array('date' => $parametros['date']), true)
-        ));
-        return;
-      }
-    }
-
     //Si el ejercicio activo coincide con el año actual toma la fecha actual.
     if ( $this->sesion['ejercicio'] == date('Y') )
       $data = array(
         'since' => date('Y-m-d'),
-        'until' => date('Y-m-d')
+        'until' => date('Y-m-d'),
+        'ejercicio_id'  => $this->sesion['ejercicio_id'],
+        'ejercicio'     => $this->sesion['ejercicio']
       );
     else
       $data = array(
-        'since' => $this->sesion['ejercicio'] . '-01-01',
-        'until' => $this->sesion['ejercicio'] . '-12-31'
+        'since'         => $this->sesion['ejercicio'] . '-01-01',
+        'until'         => $this->sesion['ejercicio'] . '-12-31',
+        'ejercicio_id'  => $this->sesion['ejercicio_id'],
+        'ejercicio'     => $this->sesion['ejercicio']
       );
 
-    $this->load->view('container', array(
+    $this->load->view('diarybook', array(
       'titulo'  => 'Libro diario',
       'head'    => $this->load->view('diarybookHead', $data, true),
       'details' => $this->load->view('diarybookDetails', $data, true)
