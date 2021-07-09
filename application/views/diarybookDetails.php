@@ -4,6 +4,31 @@
 </style>
 
 <?php
+    $this->table->add_row(array(
+        'data'  => '<h5>Balance de resultado</h5>',
+        'colspan'   => '3',
+        'style'     => 'text-align:center; display:none;'
+    ));
+    $this->table->add_row(array(
+        'data'  => '<b>Razon social:</b> Fiuni Informática',
+        'colspan'   => '100%',
+        'style'     => 'text-align:left; display:none;'
+    ));
+    $this->table->add_row(array(
+        'data'  => '<b>RUC:</b> 80059425-2',
+        'colspan'   => '100%',
+        'style'     => 'text-align:left; display:none;'
+    ));
+    $this->table->add_row(array(
+        'data'  => "<b>Ejercicio fiscal:</b> $ejercicio",
+        'colspan'   => '100%',
+        'style'     => 'text-align:left; display:none;'
+    ));
+    $this->table->add_row(array(
+        'data'  => "<b>Periodo del libro diario:</b> " . date('d/m/Y', strtotime($since)) . " al " . date('d/m/Y', strtotime($until)),
+        'colspan'   => '100%',
+        'style'     => 'text-align:left'
+    ));
     $asientos = $this->Jesus->dice(array(
         'get'   => 'asientos as t1',
         'where' => array(
@@ -24,11 +49,27 @@
         'order_by'  => array('t1.fecha' => 'asc', 't1.numero' => 'asc')
     ));
     if ( $asientos->result() ) {
+        // Cabecera
+        $this->table->add_row(
+            array(
+                'data'  => 'Fechas',
+                'style' => 'text-align:center; font-weight:bold;'
+            ),
+            array(
+                'data'  => 'Conceptos',
+                'style' => 'text-align:center; font-weight:bold;'
+            ),
+            array(
+                'data'  => 'Debe',
+                'style' => 'text-align:center; font-weight:bold;'
+            ),
+            array(
+                'data'  => 'Haber',
+                'style' => 'text-align:center; font-weight:bold;'
+            )
+        );
         // echo 'hola mundo';
-        if ( $since != $until )
-            $this->table->set_caption("Libro diario desde " . date('d/m/Y', strtotime($since)) . " hasta " . date('d/m/Y', strtotime($until)));
-        else
-            $this->table->set_caption("Libro diario de " . date('d/m/Y', strtotime($since)));
+
         $asiento_descripcion = "";
         foreach( $asientos->result() as $asientos_ ) {
 
@@ -118,13 +159,6 @@
                 ),
             ));
         }
-        $this->table->set_heading(array(
-            'Fechas',
-            // 'Números',
-            'Conceptos',
-            'Debe',
-            'Haber',
-        ));
     } else
         $this->table->add_row(array('Sin registros'));
 
